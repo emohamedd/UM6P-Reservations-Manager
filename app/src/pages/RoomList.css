@@ -1,0 +1,186 @@
+/* Existing Room List Styles */
+.room-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 50px;
+  padding: 0 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #000000;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+ul {
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+  list-style-type: none;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #000000;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+span {
+  margin: 30px;
+  font-weight: bold;
+  color: black;
+  font-size: 20px;
+}
+
+p {
+  margin: 5px 0;
+  color: #000000;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+p:first-of-type {
+  font-weight: bold;
+}
+
+p:last-of-type {
+  color: #ffffff;
+  font-style: normal;
+  font-size: large;
+}
+
+/* Available Room Styles */
+.room-available {
+  background: linear-gradient(145deg, #0cc00c, #18ff1854); /* Gradient background */
+  color: #ffffff;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;  
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.room-available:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Reserved Room Styles */
+.room-reserved {
+  background: linear-gradient(145deg, #f8d7da, #f86060); /* Gradient background */
+  color: #ffffff;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#reserved{
+  font-size:x-large;
+  color:rgb(0, 128, 128);
+}
+#attendees{
+  font-weight: bolder;
+  font-size: large;
+  color:rgb(121, 121, 121); 
+}
+#start{
+  font-size: x-large;
+  font-weight: bolder;
+  color:#008d00;
+}
+#room-status{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  padding: 0.5rem;
+  color:#05668d;
+}
+#end{
+  font-size: x-large;
+
+  font-weight: bolder;
+  color:#721c24;
+}
+.room-reserved:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Reservation Details for Reserved Rooms */
+.room-reserved-details {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: #f8d7da; 
+  border-radius: 5px;
+  color: #721c24;
+  font-size: 14px;
+  text-align: left;
+}
+
+.room-reserved-details p {
+  margin: 5px 0;
+}
+
+.room-reserved-details p strong {
+  font-weight: bold;
+}
+
+/* Media query for mobile responsiveness */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  li {
+    padding: 15px;
+  }
+
+  ul {
+    width: 90%; /* Adjust width for better mobile experience */
+  }
+
+  .room-reserved-details {
+    font-size: 12px; /* Adjust detail text size for mobile */
+  }
+}
+/* Button Styles */
+.button {
+  background: linear-gradient(145deg, rgb(236, 82, 82), rgb(87, 36, 34)); /* Gradient background */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px; /* Rounded corners */
+  font-size: 16px;
+  font-family: 'Helvetica Neue', sans-serif;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 15px; /* Space between button and text */
+  font-weight: bold;
+}
+.button:hover {
+  background: linear-gradient(90deg, rgb(247, 163, 151), rgb(126, 46, 40)); /* Gradient background */
+  transform: translateY(-3px); /* Slight lift effect */
+  box-shadow: 0 8px 20px rgb(187, 91, 91);
+} 
+
+.button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.5); /* Add custom focus outline */
+}

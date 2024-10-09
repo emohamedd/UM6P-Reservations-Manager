@@ -1,0 +1,6 @@
+/* Flexbox container to align RoomList and ReservationForm side by side */
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    padding: 30px;
+}
