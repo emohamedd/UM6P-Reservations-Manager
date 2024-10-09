@@ -18,13 +18,14 @@ app.get('/', (req, res) => {
   res.send('Conference Room Reservation API');
 });
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  ssl: true
+})
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
 
   updateRoomAvailability().then(() => {
-    console.log('Room availability updated on server startup');
-});
+  });
 
   setInterval(updateRoomAvailability, 60 * 1000); // Check every minute
 
