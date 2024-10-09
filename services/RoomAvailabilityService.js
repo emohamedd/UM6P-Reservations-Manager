@@ -11,7 +11,6 @@ async function updateRoomAvailability() {
     for (const reservation of endedReservations) {
         const room = await Room.findById(reservation.room);
         if (room) {
-            console.log(`Setting room ${room.name} to available (Reservation ended)`);
             room.isReserved = false; // Mark room as available
             await room.save();
         }
@@ -25,7 +24,6 @@ async function updateRoomAvailability() {
     const reservedRoomIds = currentReservations.map(reservation => reservation.room);
 
     await Room.updateMany({}, { isReserved: false });
-    console.log(`All rooms marked as available`);
 
     await Room.updateMany(
         { _id: { $in: reservedRoomIds } },

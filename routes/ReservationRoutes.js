@@ -58,4 +58,16 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.delete('/:roomId', async (req, res) => {
+  const { roomId } = req.params;
+  
+  try {
+    // Assuming that you have a way to identify reservations
+    await Reservation.findOneAndDelete({ roomId });
+    res.status(200).json({ message: 'Reservation cancelled successfully' });
+  } catch (error) {
+    console.error('Error cancelling reservation:', error);
+    res.status(500).json({ message: 'Error cancelling reservation' });
+  }
+});
 module.exports = router;

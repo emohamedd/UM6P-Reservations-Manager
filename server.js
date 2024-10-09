@@ -10,9 +10,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
 app.use(cors());
 app.use(cors({ origin: '*' })); // Allow all origins (or specify your friend's domain)
+app.use(express.json()); // Add this line
 
 app.get('/', (req, res) => {
   res.send('Conference Room Reservation API');

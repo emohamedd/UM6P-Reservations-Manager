@@ -17,7 +17,6 @@ router.get('/', async (req, res) => {
         });
 
         const isReserved = reservation ? true : false; // Determine reservation status
-        console.log(`Room: ${room.name}, Is Reserved: ${isReserved}`); // Log room status
 
         return { ...room._doc, isReserved, reservation }; 
       })
@@ -51,5 +50,6 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 module.exports = router;
