@@ -39,22 +39,27 @@ const RoomList = () => {
     else return "AM";
   }
 
-  // Function to handle reservation cancellation
-  const handleCancelReservation = async (roomId) => {
+  const handleCancelReservation = async (reservationId) => {
     try {
-      // Make the API call to cancel the reservation
-      const response = await API.delete(`/reservations/${roomId}`);
-      console.log('Reservation cancelled:', response.data);
-      
-      // Refresh the room list after cancellation
-      const updatedRooms = rooms.map(room => 
-        room._id === roomId ? { ...room, isReserved: false, reservation: null } : room
+      const response = await API.delete(`/reservations/${reservationId}`);
+      console.log(response.data.message);
+  
+      // Update local state to remove the reservation
+      setRooms((prevRooms) =>
+        prevRooms.map((room) =>
+          room.reservation && room.reservation._id === reservationId
+            ? { ...room, isReserved: false, reservation: null }
+            : room
+        )
       );
-      setRooms(updatedRooms);
     } catch (error) {
+      // Log the complete error object to understand the issue
       console.error('Error cancelling reservation:', error);
+      console.error('Error response data:', error.response?.data);
+      console.error('Error status:', error.response?.status);
     }
   };
+  
 
   return (
     <div className="room-list">
@@ -70,7 +75,7 @@ const RoomList = () => {
                   <p id="start">Start Time: {formatTime(room.reservation?.startTime)} {AmOrPm(room.reservation?.startTime)}</p>
                   <p id="end">End Time: {formatTime(room.reservation?.endTime)} {AmOrPm(room.reservation?.endTime)}</p>
                   <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
-                  <button className='button' onClick={() => handleCancelReservation(room._id)}>Cancel Reservation</button>
+                  <button className='button' onClick={() => handleCancelReservation(room.reservation._id)}>Cancel Reservation</button>
                 </div>
               ) : (
                 <div>

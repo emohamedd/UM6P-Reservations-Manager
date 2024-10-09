@@ -58,16 +58,32 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:roomId', async (req, res) => {
-  const { roomId } = req.params;
-  
+router.delete('/:reservationId', async (req, res) => {
+  const { reservationId } = req.params;
+
   try {
-    // Assuming that you have a way to identify reservations
-    await Reservation.findOneAndDelete({ roomId });
+    // Find the reservation by ID
+    const reservation = await Reservation.findById(reservationId);
+
+    if (!reservation) {
+      return res.status(404).json({ message: 'Reservation not found' });
+    }
+
+    // Remove the reservation from the database
+    await Reservation.findByIdAndDelete(reservationId);
+
+    // Update the room's isReserved status
+    const room = await Room.findById(reservation.room);
+    if (room) {
+      room.isReserved = false; // Set room as available
+      await room.save();
+    }
+
     res.status(200).json({ message: 'Reservation cancelled successfully' });
   } catch (error) {
     console.error('Error cancelling reservation:', error);
     res.status(500).json({ message: 'Error cancelling reservation' });
   }
 });
+
 module.exports = router;
