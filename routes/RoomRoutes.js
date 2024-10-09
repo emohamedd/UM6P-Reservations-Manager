@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const rooms = await Room.find(); // Fetch all rooms
-    console.log('Fetched rooms:', rooms); // Log fetched rooms
 
     const roomsWithReservations = await Promise.all(
       rooms.map(async (room) => {
