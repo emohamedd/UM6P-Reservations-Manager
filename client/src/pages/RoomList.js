@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import API from '../services/api';
 import './RoomList.css'; // Make sure to include your CSS file
+import Notification from '../notification/notification.js'; // Import your Notification component
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
+  const [notification, setNotification] = useState(null); // State for notifications
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -11,7 +13,7 @@ const RoomList = () => {
         const response = await API.get('/rooms');
         setRooms(response.data);
       } catch (error) {
-        console.error('Error fetching rooms:', error);
+        setNotification({ message: 'Error fetching rooms', type: 'error' }); // Set error notification
       }
     };
 
@@ -25,25 +27,20 @@ const RoomList = () => {
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
 
-    if (hours >= 12) {
-      return `${hours}:${minutes}`;
-    } else {
-      return `${hours}:${minutes}`;
-    }
+    return `${hours}:${minutes}`;
   }
 
   function AmOrPm(timeString) {
     const date = new Date(timeString);
     const hours = date.getHours();
-    if (hours >= 12) return "PM";
-    else return "AM";
+    return hours >= 12 ? "PM" : "AM";
   }
 
   const handleCancelReservation = async (reservationId) => {
     try {
       const response = await API.delete(`/reservations/${reservationId}`);
-      console.log(response.data.message);
-  
+      setNotification({ message: response.data.message || 'Reservation cancelled successfully!', type: 'success' }); // Success notification
+
       // Update local state to remove the reservation
       setRooms((prevRooms) =>
         prevRooms.map((room) =>
@@ -53,17 +50,26 @@ const RoomList = () => {
         )
       );
     } catch (error) {
-      // Log the complete error object to understand the issue
+      setNotification({ message: 'Error cancelling reservation', type: 'error' }); // Error notification
       console.error('Error cancelling reservation:', error);
       console.error('Error response data:', error.response?.data);
       console.error('Error status:', error.response?.status);
     }
   };
-  
 
   return (
     <div className="room-list">
       <h1>Rooms List</h1>
+      
+      {/* Display notification if it exists */}
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)} // Clear notification on close
+        />
+      )}
+
       <ul>
         {rooms.length > 0 ? (
           rooms.map((room) => (

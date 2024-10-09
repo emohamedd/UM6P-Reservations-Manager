@@ -1,15 +1,24 @@
+/* Container for centering the form */
+.container {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  align-items: center; /* Center vertically */
+  height: 100vh; /* Full viewport height */
+  padding: 0 20px; /* Optional padding */
+}
+
 /* Reservation Form Styles */
 form {
   background-color: #f4f7f8;
-  /* max-width: 400px; */
-  /* margin: 50px; */
-  margin:auto;
+  max-width: 400px;
+  margin: 0; /* No margin needed, centered by container */
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Helvetica Neue', sans-serif;
 }
 
+/* Other styles remain the same */
 h2 {
   font-size: 24px;
   margin-bottom: 20px;

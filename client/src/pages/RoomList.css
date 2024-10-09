@@ -61,7 +61,7 @@ p:last-of-type {
   padding: 20px;
   margin: 15px;
   border-radius: 12px; /* More rounded corners */
-  border: 4px solid  black;
+  /* border: 4px solid  black; */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   font-family: 'Arial', sans-serif;
   font-size: 16px;  
@@ -73,7 +73,7 @@ p:last-of-type {
   background: linear-gradient(145deg, #0fd80f, #08940881); /* Gradient background */
   transform: translateY(-5px); /* Lift effect on hover */
   box-shadow: 0 12px 24px rgba(58, 255, 58, 0.2); /* Enhanced shadow on hover */
-  border: 2px solid  rgb(46, 148, 5);
+  border: 4px solid  rgb(46, 148, 5);
 
 }
 
@@ -89,14 +89,14 @@ p:last-of-type {
   font-size: 16px;
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 4px solid black;
+  /* border: 4px solid black; */
 }
 .room-reserved:hover {
   background: linear-gradient(145deg, #ff1d1d, #be060681); /* Gradient background */
   transform: translateY(-5px); /* Lift effect on hover */
   transition: transform 0.2s, ease-in-out;
   box-shadow: 0 12px 24px rgba(255, 58, 58, 0.2); /* Enhanced shadow on hover */
-  border: 2px solid  rgb(148, 5, 5);
+  border: 4px solid  rgb(148, 5, 5);
 }
 
 #reserved{

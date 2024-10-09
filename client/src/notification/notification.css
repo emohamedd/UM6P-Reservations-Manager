@@ -1,0 +1,32 @@
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    color: #fff;
+    z-index: 1000;
+    animation: fadeOut 3s forwards; /* Fades out after 3 seconds */
+  }
+  
+  .notification.success {
+    background-color: #4caf50; /* Green for success */
+  }
+  
+  .notification.error {
+    background-color: #f44336; /* Red for error */
+  }
+  
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      display: none;
+    }
+  }
+  

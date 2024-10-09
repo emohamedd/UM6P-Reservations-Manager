@@ -5,11 +5,14 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-
-    background-color: white; 
+    background: linear-gradient(135deg, #f5f7fa, #3bce01b7); /* Soft gradient background */
   }
   
   .logo-animation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     animation: fadeOut 2s ease-in-out;
   }
   
@@ -18,7 +21,18 @@
     height: 150px;
     animation: pulse 1.5s infinite;  /* Logo pulse animation */
   }
-  
+
+  .logo2{
+    width: 100px;
+    height: 100px;
+    animation: pulse 1.5s infinite;  /* Logo pulse animation */
+  }
+  .separator{
+    margin: 30px;
+    color: white;
+    font-weight: bolder;
+    font-size: 30px;
+  }
   @keyframes pulse {
     0% {
       transform: scale(1);
