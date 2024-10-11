@@ -10,7 +10,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
 app.use(cors({ origin: '*' })); // Allow all origins (or specify your friend's domain)
 app.use(express.json()); // Add this line
 
@@ -19,7 +18,9 @@ app.get('/', (req, res) => {
 });
 
 mongoose.connect(process.env.MONGO_URI, {
-  ssl: true
+  ssl: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
@@ -29,7 +30,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
   setInterval(updateRoomAvailability, 60 * 1000); // Check every minute
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0' , () => {
   console.log(`Server is running on port ${PORT}`);
 });
 

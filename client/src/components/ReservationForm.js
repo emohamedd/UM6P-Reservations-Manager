@@ -29,6 +29,22 @@ const ReservationForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+  
+    const selectedRoom = rooms.find(room => room._id === roomId);
+  
+    // Check if attendees exceed room capacity
+    if (attendees > selectedRoom.maxCapacity) {
+      setNotification({ message: `Attendees exceed room capacity of ${selectedRoom.maxCapacity}.`, type: 'error' });
+      return;
+    }
+    
+    const startTimestamp = new Date(startTime).getTime();
+  const endTimestamp = new Date(endTime).getTime();
+
+  if (endTimestamp <= startTimestamp) {
+    setNotification({ message: 'End time must be later than start time.', type: 'error' });
+    return;
+  }
 
     const reservationData = {
       clientName,
@@ -37,10 +53,13 @@ const ReservationForm = () => {
       startTime,
       endTime,
     };
-
+  
     try {
       const response = await axios.post('http://localhost:5000/api/reservations', reservationData);
       setNotification({ message: 'Reservation added successfully!', type: 'success' }); // Success notification
+  
+
+        window.location.reload();
       // Reset form fields after successful reservation
       setClientName('');
       setRoomId('');
@@ -52,7 +71,7 @@ const ReservationForm = () => {
       console.error('Error adding reservation:', error);
     }
   };
-
+  
   return (
     <div className='container'>
       {/* Display notification if it exists */}

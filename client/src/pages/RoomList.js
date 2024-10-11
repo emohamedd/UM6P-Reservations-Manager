@@ -59,7 +59,7 @@ const RoomList = () => {
 
   return (
     <div className="room-list">
-      <h1>Rooms List</h1>
+      <h1> - Rooms List - </h1>
       
       {/* Display notification if it exists */}
       {notification && (

@@ -56,7 +56,7 @@ p:last-of-type {
 
 /* Available Room Styles */
 .room-available {
-  background: linear-gradient(145deg, #0cc00c, #18ff1854); /* Gradient background */
+  background: linear-gradient(145deg, #075e07, #18ff18ad); /* Gradient background */
   color: #ffffff;
   padding: 20px;
   margin: 15px;
