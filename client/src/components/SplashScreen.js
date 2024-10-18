@@ -6,8 +6,8 @@ const SplashScreen = () => {
     <div className="splash-container">
       <div className="logo-animation">
         <img src='./assets/um6p.svg' alt="Logo" className='logo'/>
-        <span className="separator">X</span>
-        <img src="./assets/ocp.svg" alt="Logo"  className='logo2'/>
+        {/* <span className="separator">X</span> */}
+        {/* <img src="./assets/ocp.svg" alt="Logo"  className='logo2'/> */}
       </div>
     </div>
   );

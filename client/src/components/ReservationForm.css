@@ -46,6 +46,7 @@ select {
   background-color: #fff;
   box-sizing: border-box;
   transition: border-color 0.3s, box-shadow 0.3s;
+  cursor:cell;
 }
 
 input[type="text"]:focus,
@@ -53,7 +54,7 @@ input[type="number"]:focus,
 input[type="datetime-local"]:focus,
 select:focus {
   outline: none;
-  border-color: #0cc53a;
+  border-color: #c56f0c;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -61,16 +62,17 @@ button[type="submit"] {
   display: inline-block;
   width: 100%;
   padding: 12px;
-  background-color: #28a745;
+  background-color: #aa5610;
   color: white;
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+  /* cursor: pointer; */
   transition: background-color 0.3s, transform 0.3s;
 }
 
 button[type="submit"]:hover {
-  background-color: #23db4b; /* Darker green on hover */
+  background-color: #db8b23; /* Darker green on hover */
   transform: translateY(-2px); /* Lift effect on hover */
+  cursor:pointer;
 }

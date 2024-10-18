@@ -1,10 +1,10 @@
 body {
-    background: linear-gradient(135deg, #f5f7fa, #3bce01b7); /* Soft gradient background */
+    background: linear-gradient(45deg, #EBEBD3 40%, #EE964B 80%);
     font-family: 'Helvetica Neue', sans-serif; /* Modern font */
     color: #2c3e50; /* Darker blue for better readability */
     min-height: 100vh; /* Ensure the background covers the full viewport height */
     position: relative;
-    overflow: hidden;
+    overflow:visible;
 }
 
 body::before {
@@ -16,7 +16,7 @@ body::before {
     height: 100%;
     background-image: radial-gradient(#ffffff 1px, transparent 1px);
     background-size: 20px 20px; /* Adjust the size of the dots */
-    opacity: 0.3; /* Make the dots subtle */
+    opacity: 0.1; /* Make the dots subtle */
     z-index: -1; /* Ensure the dots are behind the content */
 }
 
@@ -26,8 +26,8 @@ body::before {
 }
 
 #app-name {
-    font-size: 54px; /* Larger text for the app name */
-    font-weight: bold; /* Bold font weight for emphasis */
-    margin: 10px 0; /* Add spacing around the app name */
+    font-size: 54px;
+    font-weight: bold; 
+    margin: 10px 0; 
     color: black;
 }

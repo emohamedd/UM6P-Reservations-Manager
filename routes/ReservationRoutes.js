@@ -59,7 +59,8 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:reservationId', async (req, res) => {
-  const { reservationId } = req.params;
+  const 
+{ reservationId } = req.params;
 
   try {
     // Find the reservation by ID

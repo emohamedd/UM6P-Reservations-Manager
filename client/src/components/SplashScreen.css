@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa, #3bce01b7); /* Soft gradient background */
+    /* background: linear-gradient(45deg, #1b6614 30%, rgb(0, 0, 0) 90%); */
   }
   
   .logo-animation {
@@ -17,21 +17,21 @@
   }
   
   .logo {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     animation: pulse 1.5s infinite;  /* Logo pulse animation */
   }
 
   .logo2{
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     animation: pulse 1.5s infinite;  /* Logo pulse animation */
   }
   .separator{
-    margin: 30px;
+    margin: 50px;
     color: white;
     font-weight: bolder;
-    font-size: 30px;
+    font-size: 50px;
   }
   @keyframes pulse {
     0% {

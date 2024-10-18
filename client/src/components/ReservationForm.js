@@ -37,7 +37,6 @@ const ReservationForm = () => {
       setNotification({ message: `Attendees exceed room capacity of ${selectedRoom.maxCapacity}.`, type: 'error' });
       return;
     }
-    
     const startTimestamp = new Date(startTime).getTime();
   const endTimestamp = new Date(endTime).getTime();
 
