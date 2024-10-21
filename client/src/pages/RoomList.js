@@ -6,6 +6,9 @@ import Notification from '../notification/notification.js'; // Import your Notif
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [notification, setNotification] = useState(null); // State for notifications
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const categories = [...new Set(rooms.map(room => room.category))];
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -19,6 +22,13 @@ const RoomList = () => {
 
     fetchRooms();
   }, []);
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+  const filteredRooms = selectedCategory
+  ? rooms.filter(room => room.category === selectedCategory)
+  : rooms;
 
   function formatTime(timeString) {
     if (!timeString) return 'N/A';
@@ -41,6 +51,7 @@ const RoomList = () => {
       const response = await API.delete(`/reservations/${reservationId}`);
       setNotification({ message: response.data.message || 'Reservation cancelled successfully!', type: 'success' }); // Success notification
 
+      
       // Update local state to remove the reservation
       setRooms((prevRooms) =>
         prevRooms.map((room) =>
@@ -58,23 +69,23 @@ const RoomList = () => {
   };
 
   return (
-    <div className="room-list">
-      <h1> - Rooms List - </h1>
-      
-      {/* Display notification if it exists */}
-      {notification && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification(null)} // Clear notification on close
-        />
-      )}
+    <div>
+      <label class="head" htmlFor="category-select">Select Category:</label>
+      <select id="category-select" onChange={handleCategoryChange}>
+        <option value="">All Categories</option>
+        {categories.map(category => (
+          <option key={category} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
 
       <ul>
-        {rooms.length > 0 ? (
-          rooms.map((room) => (
+        {filteredRooms.length > 0 ? (
+          filteredRooms.map((room) => (
             <li key={room._id} className={room.isReserved ? 'room-reserved' : 'room-available'}>
               <h2>Room: {room.name || 'Unnamed Room'}</h2>
+              <p>Category: {room.category || 'N/A'}</p>
               {room.isReserved ? (
                 <div>
                   <p id="reserved">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>

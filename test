@@ -1,0 +1,72 @@
+
+
+return (
+    <div className='container'>
+      {/* Display notification if it exists */}
+      {notification && (
+        <Notification
+          message={notification.message}
+          type={notification.type}
+          onClose={() => setNotification(null)} // Clear notification on close
+        />
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <h2>Make a Reservation</h2>
+
+        <div>
+          <label>Company Name</label>
+          <input
+            type="text"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
+            required
+          />
+        </div>
+        
+        <div>
+          <label>Room</label>
+          <select value={roomId} onChange={(e) => setRoomId(e.target.value)} required>
+            <option value="">Select a Room</option>
+            {rooms.map((room) => (
+              <option key={room._id} value={room._id}>
+                {room.name} (Max: {room.maxCapacity})
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Number of Attendees</label>
+          <input
+            type="number"
+            value={attendees}
+            onChange={(e) => setAttendees(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Reservation Start Time</label>
+          <input
+            type="datetime-local" // Using datetime-local input for picking date & time
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Reservation End Time</label>
+          <input
+            type="datetime-local" // Using datetime-local input for picking date & time
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+            required
+          />
+        </div>
+
+        <button type="submit">Reserve</button>
+      </form>
+    </div>
+  );

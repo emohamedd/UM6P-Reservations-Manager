@@ -5,7 +5,8 @@ const ReservationSchema = new mongoose.Schema({
   room: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
   attendees: { type: Number, required: true },
   startTime: { type: Date, required: true },
-  endTime: { type: Date, required: true }
+  endTime: { type: Date, required: true },
+  category: { type: String, required: true }
 });
 
 const Reservation = mongoose.model('Reservation', ReservationSchema);

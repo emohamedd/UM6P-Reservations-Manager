@@ -46,7 +46,7 @@ select {
   background-color: #fff;
   box-sizing: border-box;
   transition: border-color 0.3s, box-shadow 0.3s;
-  cursor:cell;
+  cursor:text;
 }
 
 input[type="text"]:focus,

@@ -7,43 +7,48 @@ import Notification from '../notification/notification.js';
 const ReservationForm = () => {
   const [clientName, setClientName] = useState('');
   const [roomId, setRoomId] = useState('');
-  const [attendees, setAttendees] = useState('');
-  const [startTime, setStartTime] = useState(''); // Start time state
-  const [endTime, setEndTime] = useState(''); // End time state
+  const [attendees, setAttendees] = useState(0);
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [rooms, setRooms] = useState([]);
-  const [notification, setNotification] = useState(null); // State for notifications
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    // Fetch available rooms for the dropdown
-    const fetchRooms = async () => {
+    // Fetch available rooms and categories for the dropdown
+    const fetchRoomsAndCategories = async () => {
       try {
         const response = await API.get('/rooms');
         setRooms(response.data);
+        const uniqueCategories = [...new Set(response.data.map(room => room.category))];
+        setCategories(uniqueCategories);
       } catch (error) {
-        setNotification({ message: 'Error fetching rooms', type: 'error' }); // Set error notification
+        setNotification({ message: 'Error fetching rooms', type: 'error' });
       }
     };
 
-    fetchRooms();
+    fetchRoomsAndCategories();
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     const selectedRoom = rooms.find(room => room._id === roomId);
-  
+
     // Check if attendees exceed room capacity
     if (attendees > selectedRoom.maxCapacity) {
       setNotification({ message: `Attendees exceed room capacity of ${selectedRoom.maxCapacity}.`, type: 'error' });
       return;
     }
-    const startTimestamp = new Date(startTime).getTime();
-  const endTimestamp = new Date(endTime).getTime();
 
-  if (endTimestamp <= startTimestamp) {
-    setNotification({ message: 'End time must be later than start time.', type: 'error' });
-    return;
-  }
+    const startTimestamp = new Date(startTime).getTime();
+    const endTimestamp = new Date(endTime).getTime();
+
+    if (endTimestamp <= startTimestamp) {
+      setNotification({ message: 'End time must be later than start time.', type: 'error' });
+      return;
+    }
 
     const reservationData = {
       clientName,
@@ -51,94 +56,85 @@ const ReservationForm = () => {
       attendees,
       startTime,
       endTime,
+      category: selectedCategory, // Include category in reservation data
     };
-  
+
     try {
       const response = await axios.post('http://localhost:5000/api/reservations', reservationData);
-      setNotification({ message: 'Reservation added successfully!', type: 'success' }); // Success notification
-  
-
-        window.location.reload();
-      // Reset form fields after successful reservation
-      setClientName('');
-      setRoomId('');
-      setAttendees('');
-      setStartTime('');
-      setEndTime('');
+      setNotification({ message: 'Reservation added successfully!', type: 'success' });
     } catch (error) {
-      setNotification({ message: 'Error adding reservation', type: 'error' }); // Error notification
-      console.error('Error adding reservation:', error);
+      setNotification({ message: 'Error adding reservation', type: 'error' });
     }
   };
-  
+
+  const filteredRooms = selectedCategory
+    ? rooms.filter(room => room.category === selectedCategory)
+    : rooms;
+
   return (
-    <div className='container'>
-      {/* Display notification if it exists */}
-      {notification && (
-        <Notification
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification(null)} // Clear notification on close
-        />
-      )}
-
+    <div className="container">
       <form onSubmit={handleSubmit}>
-        <h2>Make a Reservation</h2>
-
-        <div>
-          <label>Client Name</label>
-          <input
-            type="text"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Room</label>
-          <select value={roomId} onChange={(e) => setRoomId(e.target.value)} required>
-            <option value="">Select a Room</option>
-            {rooms.map((room) => (
-              <option key={room._id} value={room._id}>
-                {room.name} (Max: {room.maxCapacity})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>Number of Attendees</label>
-          <input
-            type="number"
-            value={attendees}
-            onChange={(e) => setAttendees(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Reservation Start Time</label>
-          <input
-            type="datetime-local" // Using datetime-local input for picking date & time
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required
-          />
-        </div>
-
-        <div>
-          <label>Reservation End Time</label>
-          <input
-            type="datetime-local" // Using datetime-local input for picking date & time
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit">Reserve</button>
-      </form>
+      <label>
+        Client Name:
+        <input 
+          type="text" 
+          value={clientName} 
+          onChange={(e) => setClientName(e.target.value.toUpperCase())} 
+        />
+      </label>
+      <label>
+        Select Category:
+        <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+          <option value="">Select a category</option>
+          {categories.map(category => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Select Room:
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)} disabled={!selectedCategory}>
+          <option value="">Select a room</option>
+          {filteredRooms.map(room => (
+            <option key={room._id} value={room._id}>
+              {room.name} (Capacity: {room.maxCapacity})
+            </option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Attendees:
+        <input 
+          type="number" 
+          value={attendees} 
+          onChange={(e) => setAttendees(e.target.value)} 
+        />
+      </label>
+      <label>
+        Start Time:
+        <input 
+          type="datetime-local" 
+          value={startTime} 
+          onChange={(e) => setStartTime(e.target.value)} 
+        />
+      </label>
+      <label>
+        End Time:
+        <input 
+          type="datetime-local" 
+          value={endTime} 
+          onChange={(e) => setEndTime(e.target.value)} 
+        />
+      </label>
+      <button type="submit">Reserve</button>
+      {notification && (
+        <p className={notification.type === 'error' ? 'error' : 'success'}>
+          {notification.message}
+        </p>
+      )}
+    </form>
     </div>
   );
 };

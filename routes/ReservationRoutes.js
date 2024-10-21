@@ -4,7 +4,7 @@ const Reservation = require('../models/Reservation'); // Adjust the path if nece
 const Room = require('../models/Room'); // Import Room model
 
 router.post('/', async (req, res) => {
-  const { clientName, roomId, attendees, startTime, endTime } = req.body;
+  const { clientName, roomId, attendees, startTime, endTime, category } = req.body;
 
   try {
     // Check for overlapping reservations
@@ -30,6 +30,11 @@ router.post('/', async (req, res) => {
       return res.status(404).json({ message: 'Room not found' });
     }
 
+    // Check if the room's category matches the selected category
+    if (room.category !== category) {
+      return res.status(400).json({ message: 'Selected category does not match the room category.' });
+    }
+
     // Check if room is currently reserved
     if (room.isReserved) {
       return res.status(409).json({ message: 'Room is already reserved.' });
@@ -42,6 +47,7 @@ router.post('/', async (req, res) => {
       attendees,
       startTime,
       endTime,
+      category, // Include category
     });
 
     // Save reservation
@@ -59,8 +65,7 @@ router.post('/', async (req, res) => {
 });
 
 router.delete('/:reservationId', async (req, res) => {
-  const 
-{ reservationId } = req.params;
+  const { reservationId } = req.params;
 
   try {
     // Find the reservation by ID
