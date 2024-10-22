@@ -52,10 +52,10 @@ const ReservationForm = () => {
 
     const reservationData = {
       clientName,
-      roomId,
+      room: roomId,
       attendees,
-      startTime,
-      endTime,
+      startTime: new Date(startTime).toISOString(),
+      endTime: new Date(endTime).toISOString(),
       category: selectedCategory, // Include category in reservation data
     };
 

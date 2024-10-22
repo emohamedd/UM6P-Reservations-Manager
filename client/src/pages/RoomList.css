@@ -6,6 +6,10 @@
   flex-wrap: wrap;
   margin-top: 50px;
   padding: 0 20px;
+  background-color: #000000;
+  padding: 50px;
+  width: 100%;
+  border-radius: 10px;
   /* width: fit-content; */
 }
 
@@ -19,10 +23,33 @@ h1 {
 
 ul {
   padding: 0;
-  width: 50%;
-  /* max-width: 600px; */
+  width: 1000px;
   list-style-type: none;
+  max-height: 900px; /* Limit height to enable scroll */
+  overflow-y: auto;  /* Enable vertical scroll */
+  margin-bottom: 20px; /* Add some space below */
+  height: 100%;
 }
+
+/* Optional: Style the scrollbar */
+ul::-webkit-scrollbar {
+  width: 50px;
+}
+
+ul::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+  border-radius: 10px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background: #9e4b07; 
+  border-radius: 10px;
+}
+
+ul::-webkit-scrollbar-thumb:hover {
+  background: #d6670c;
+}
+
 
 h2 {
   font-size: 24px;
@@ -56,7 +83,7 @@ p:last-of-type {
 
 /* Available Room Styles */
 .room-available {
-  background: linear-gradient(45deg, #8a480e 40%, #cf6f1b 80%);
+  background: linear-gradient(45deg, #923e0d 40%, #ff701d 80%);
   color: #ffffff;
   padding: 20px;
   margin: 15px;
@@ -67,10 +94,12 @@ p:last-of-type {
   font-size: 16px;  
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  width: 15rem !important;
 }
 
 .room-available:hover {
-  background:linear-gradient(45deg, #ebe2d3 40%, #EE964B 80%);
+  background:linear-gradient(45deg, #ebe2d3 40%, #ff701d 80%);
   transform: translateY(-5px); /* Lift effect on hover */
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
   border: 4px solid  #ffc089;
@@ -109,19 +138,8 @@ p:last-of-type {
   font-size: large;
   color:rgb(173, 171, 171); 
 }
-#start{
-  font-size: x-large;
-  font-weight: bolder;
-  color:#04c204;
-}
-#room-status{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: x-large;
-  padding: 0.5rem;
-  color:#ffffff;
-}
+
+
 #end{
   font-size: x-large;
 
@@ -215,4 +233,26 @@ label[for="category-select"] {
   margin-right: 10px;
   color: #1b0f0f;
   font-family: 'Helvetica Neue', sans-serif;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.pagination button {
+  background-color: #000000;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

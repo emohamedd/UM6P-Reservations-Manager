@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import API from '../services/api';
-import './RoomList.css'; // Make sure to include your CSS file
+import './RoomList.css'; // Ensure CSS file is correctly imported
 import Notification from '../notification/notification.js'; // Import your Notification component
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
-  const [notification, setNotification] = useState(null); // State for notifications
+  const [notification, setNotification] = useState(null); // Notification state
   const [selectedCategory, setSelectedCategory] = useState('');
-
-  const categories = [...new Set(rooms.map(room => room.category))];
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -16,43 +14,43 @@ const RoomList = () => {
         const response = await API.get('/rooms');
         setRooms(response.data);
       } catch (error) {
-        setNotification({ message: 'Error fetching rooms', type: 'error' }); // Set error notification
+        setNotification({ message: 'Error fetching rooms', type: 'error' });
       }
     };
 
     fetchRooms();
   }, []);
 
+  // Ensure categories are computed safely after rooms are loaded
+  const categories = [...new Set(rooms.map(room => room.category))];
+
+  // Filtered rooms logic inside the component body
+  const filteredRooms = selectedCategory
+    ? rooms.filter(room => room.category === selectedCategory)
+    : rooms;
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
-  const filteredRooms = selectedCategory
-  ? rooms.filter(room => room.category === selectedCategory)
-  : rooms;
 
-  function formatTime(timeString) {
+  const formatTime = (timeString) => {
     if (!timeString) return 'N/A';
-
     const date = new Date(timeString);
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
-
     return `${hours}:${minutes}`;
-  }
+  };
 
-  function AmOrPm(timeString) {
+  const AmOrPm = (timeString) => {
     const date = new Date(timeString);
-    const hours = date.getHours();
-    return hours >= 12 ? "PM" : "AM";
-  }
+    return date.getHours() >= 12 ? 'PM' : 'AM';
+  };
 
   const handleCancelReservation = async (reservationId) => {
     try {
       const response = await API.delete(`/reservations/${reservationId}`);
-      setNotification({ message: response.data.message || 'Reservation cancelled successfully!', type: 'success' }); // Success notification
+      setNotification({ message: response.data.message || 'Reservation cancelled!', type: 'success' });
 
-      
-      // Update local state to remove the reservation
       setRooms((prevRooms) =>
         prevRooms.map((room) =>
           room.reservation && room.reservation._id === reservationId
@@ -61,16 +59,13 @@ const RoomList = () => {
         )
       );
     } catch (error) {
-      setNotification({ message: 'Error cancelling reservation', type: 'error' }); // Error notification
-      console.error('Error cancelling reservation:', error);
-      console.error('Error response data:', error.response?.data);
-      console.error('Error status:', error.response?.status);
+      setNotification({ message: 'Error cancelling reservation', type: 'error' });
     }
   };
 
   return (
-    <div>
-      <label class="head" htmlFor="category-select">Select Category:</label>
+    <div className="room-list-container">
+      <label htmlFor="category-select">Select Category:</label>
       <select id="category-select" onChange={handleCategoryChange}>
         <option value="">All Categories</option>
         {categories.map(category => (
@@ -80,7 +75,7 @@ const RoomList = () => {
         ))}
       </select>
 
-      <ul>
+      <ul className="room-list">
         {filteredRooms.length > 0 ? (
           filteredRooms.map((room) => (
             <li key={room._id} className={room.isReserved ? 'room-reserved' : 'room-available'}>
@@ -92,7 +87,7 @@ const RoomList = () => {
                   <p id="start">Start Time: {formatTime(room.reservation?.startTime)} {AmOrPm(room.reservation?.startTime)}</p>
                   <p id="end">End Time: {formatTime(room.reservation?.endTime)} {AmOrPm(room.reservation?.endTime)}</p>
                   <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
-                  <button className='button' onClick={() => handleCancelReservation(room.reservation._id)}>Cancel Reservation</button>
+                  <button className="button" onClick={() => handleCancelReservation(room.reservation._id)}>Cancel Reservation</button>
                 </div>
               ) : (
                 <div>

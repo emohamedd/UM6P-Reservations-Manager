@@ -7,7 +7,6 @@ const roomSchema = new mongoose.Schema({
     category: { type: String, required: true }
 });
 
-// Use conditional model creation
 const Room = mongoose.models.Room || mongoose.model('Room', roomSchema);
 
 module.exports = Room;

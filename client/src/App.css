@@ -1,6 +1,16 @@
 /* Flexbox container to align RoomList and ReservationForm side by side */
 .page-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
-    padding: 30px;
+    display: flex;
+    justify-content: center; /* Evenly distribute space between children */
+    align-items: center; /* Center vertically */
+    flex-direction: column;
+    /* padding: 30px; */
 }
+/* .room-list {
+    flex: 1;
+    padding: 40px;
+    width: 100%;
+    background-color: #1b0d04;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+  } */

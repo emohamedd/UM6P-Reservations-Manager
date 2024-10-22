@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: center; /* Space out elements */
+  align-items: center; /* Center vertically */
+  padding: 20px 40px; /* Add padding */
+  background: linear-gradient(90deg, #e45a0a, #ffffff); /* Gradient background */
+  color: white; /* Text color */
+  width: 100%; /* Full width */
+  height: fit-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+.logos {
+  display: flex;
+  align-items: center; /* Center logo and app name */
+  justify-content: center; /* Center horizontally */
+  animation: fadeOut 3s ease-in-out infinite; /* Logo fade animation */
+}
+
+.logo-image {
+  height: 80px; /* Set logo height */
+  margin-right: 10px; /* Space between logo and app name */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.logo-image:hover {
+  transform: scale(1.1); /* Slightly enlarge logo on hover */
+  cursor: pointer;
+}
+
+.app-name {
+  font-size: 24px; /* Increase font size */
+  font-weight: bold; /* Make text bold */
+  margin-left: 10px; /* Space between logo and app name */
+}
+
+
+/* Keyframes for fadeOut animation */
+@keyframes fadeOut {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

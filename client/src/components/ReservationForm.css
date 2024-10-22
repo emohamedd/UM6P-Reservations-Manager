@@ -1,21 +1,22 @@
 /* Container for centering the form */
 .container {
   display: flex;
-  justify-content: flex-end; /* Align to the right */
+  justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  height: 100vh; /* Full viewport height */
-  padding: 0 20px; /* Optional padding */
+  padding: 90px; /* Remove padding */
+  width: 80%; /* Full width */
+
 }
 
 /* Reservation Form Styles */
 form {
   background-color: #f4f7f8;
-  max-width: 400px;
   margin: 0; /* No margin needed, centered by container */
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Helvetica Neue', sans-serif;
+  width: 70%; /* Full width */
 }
 
 /* Other styles remain the same */
@@ -43,26 +44,13 @@ select {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
-  background-color: #fff;
-  box-sizing: border-box;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  cursor:text;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="datetime-local"]:focus,
-select:focus {
-  outline: none;
-  border-color: #c56f0c;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 button[type="submit"] {
   display: inline-block;
   width: 100%;
   padding: 12px;
-  background-color: #aa5610;
+  background-color: #c75411;
   color: white;
   font-size: 18px;
   border: none;
@@ -72,7 +60,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #db8b23; /* Darker green on hover */
+  background-color: #ff701d; /* Darker green on hover */
   transform: translateY(-2px); /* Lift effect on hover */
   cursor:pointer;
 }

@@ -3,6 +3,7 @@ import RoomList from './pages/RoomList';
 import ReservationForm from './components/ReservationForm';
 import SplashScreen from './components/SplashScreen';
 import './App.css'; // Import your CSS
+import Header from './components/header';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -21,10 +22,17 @@ function App() {
       {loading ? (
         <SplashScreen />
       ) : (
+        <>
         <div className="page-container">
-          <RoomList />
-          <ReservationForm />
+        <Header /> 
+          <div>
+            <ReservationForm />
+          </div>
+          <div>
+            <RoomList />
+          </div>
         </div>
+      </>
       )}
     </div>
   );
