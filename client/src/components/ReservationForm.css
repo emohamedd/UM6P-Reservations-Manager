@@ -3,9 +3,8 @@
   display: flex;
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
-  padding: 90px; /* Remove padding */
-  width: 80%; /* Full width */
-
+  padding: 90px; /* Adjust padding */
+  width: 80%; /* Adjust width */
 }
 
 /* Reservation Form Styles */
@@ -16,7 +15,7 @@ form {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Helvetica Neue', sans-serif;
-  width: 70%; /* Full width */
+  width: 70%; /* Adjust width */
 }
 
 /* Other styles remain the same */
@@ -44,6 +43,20 @@ select {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
+  background-color: #fff; /* Ensure consistent background color */
+  color: #333; /* Ensure consistent text color */
+  cursor: pointer;
+}
+
+/* Add focus styles for better accessibility */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+select:focus {
+  border-color: #000000;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
 button[type="submit"] {
@@ -55,12 +68,11 @@ button[type="submit"] {
   font-size: 18px;
   border: none;
   border-radius: 5px;
-  /* cursor: pointer; */
   transition: background-color 0.3s, transform 0.3s;
 }
 
 button[type="submit"]:hover {
-  background-color: #ff701d; /* Darker green on hover */
+  background-color: #ff701d; /* Darker color on hover */
   transform: translateY(-2px); /* Lift effect on hover */
-  cursor:pointer;
+  cursor: pointer;
 }

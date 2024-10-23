@@ -3,6 +3,7 @@ const router = express.Router();
 const Reservation = require('../models/Reservation'); // Adjust the path if necessary
 const Room = require('../models/Room'); // Import Room model
 
+// Fetch all reservations
 router.get('/', async (req, res) => {
   try {
     const reservations = await Reservation.find();
@@ -13,12 +14,13 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Create a new reservation
 router.post('/', async (req, res) => {
   try {
     const { clientName, room, attendees, startTime, endTime, category } = req.body;
 
     if (!clientName || !room || !attendees || !startTime || !endTime || !category) {
-      alert('All fields are required.');
+      console.error('Validation Error: All fields are required.');
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -31,6 +33,7 @@ router.post('/', async (req, res) => {
     });
 
     if (overlappingReservation) {
+      console.error('Conflict Error: Room already reserved for the selected time.');
       return res.status(409).json({ message: 'Room already reserved for the selected time.' });
     }
 
@@ -52,10 +55,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-
+// Delete a reservation
 router.delete('/:reservationId', async (req, res) => {
-  const 
-{ reservationId } = req.params;
+  const { reservationId } = req.params;
 
   try {
     // Find the reservation by ID
