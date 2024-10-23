@@ -1,6 +1,6 @@
 import './ReservationForm.css';
 import React, { useState, useEffect } from 'react';
-import API from '../services/api';  // Assuming API is a helper for Axios requests
+import API from '../services/api.js';  // Assuming API is a helper for Axios requests
 import axios from 'axios';
 import Notification from '../notification/notification.js';
 

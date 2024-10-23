@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import API from '../services/api';
+import API from '../services/api.js';
 import './RoomList.css'; // Ensure CSS file is correctly imported
 import Notification from '../notification/notification.js'; // Import your Notification component
 

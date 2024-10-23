@@ -1,3 +1,10 @@
+body{
+    margin-top: 0;
+    /* overflow-y: hidden; */
+    /* padding: 0; */
+  }
+
+  
 .header {
   display: flex;
   justify-content: center; /* Space out elements */
@@ -7,6 +14,7 @@
   color: white; /* Text color */
   width: 100%; /* Full width */
   height: fit-content;
+  margin-bottom: 50px; /* Add space below header */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
@@ -18,7 +26,7 @@
 }
 
 .logo-image {
-  height: 80px; /* Set logo height */
+  height: 40px; /* Set logo height */
   margin-right: 10px; /* Space between logo and app name */
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }

@@ -1,4 +1,7 @@
 /* Existing Room List Styles */
+body{
+  overflow-x: hidden;
+}
 .room-list {
   display: flex;
   flex-direction: column;
@@ -6,7 +9,7 @@
   flex-wrap: wrap;
   margin-top: 50px;
   padding: 0 20px;
-  background-color: #000000;
+  background: linear-gradient(90deg, #d46626, #ffffff);
   padding: 50px;
   width: 100%;
   border-radius: 10px;
@@ -23,9 +26,9 @@ h1 {
 
 ul {
   padding: 0;
-  width: 1000px;
+  width: 5%;
   list-style-type: none;
-  max-height: 900px; /* Limit height to enable scroll */
+  max-height: 1000px; /* Limit height to enable scroll */
   overflow-y: auto;  /* Enable vertical scroll */
   margin-bottom: 20px; /* Add some space below */
   height: 100%;
@@ -83,7 +86,7 @@ p:last-of-type {
 
 /* Available Room Styles */
 .room-available {
-  background: linear-gradient(45deg, #923e0d 40%, #ff701d 80%);
+  background: linear-gradient(45deg, #b1531e 40%, #ff701d 80%);
   color: #ffffff;
   padding: 20px;
   margin: 15px;
@@ -95,7 +98,7 @@ p:last-of-type {
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
-  width: 15rem !important;
+  width: 20rem !important;
 }
 
 .room-available:hover {
