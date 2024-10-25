@@ -23,6 +23,20 @@ const RoomList = () => {
 
   // Ensure categories are computed safely after rooms are loaded
   const categories = [...new Set(rooms.map(room => room.category))];
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const updatedRooms = rooms.map(room => {
+        if (room.isReserved && new Date(room.reservation.endTime) <= new Date()) {
+          return { ...room, isReserved: false, reservation: null };
+        }
+        return room;
+      });
+      setRooms(updatedRooms);
+    }, 60000); // Check every minute
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [rooms]);
 
   // Filtered rooms logic inside the component body
   const filteredRooms = selectedCategory
@@ -68,41 +82,67 @@ const RoomList = () => {
       <label htmlFor="category-select">Select Category:</label>
       <select id="category-select" onChange={handleCategoryChange}>
         <option value="">All Categories</option>
-        {categories.map(category => (
+        {categories.map((category) => (
           <option key={category} value={category}>
             {category}
           </option>
         ))}
       </select>
-
-      <ul className="room-list">
-        {filteredRooms.length > 0 ? (
-          filteredRooms.map((room) => (
-            <li key={room._id} className={room.isReserved ? 'room-reserved' : 'room-available'}>
-              <h2>Room: {room.name || 'Unnamed Room'}</h2>
-              <p>Category: {room.category || 'N/A'}</p>
-              {room.isReserved ? (
-                <div>
-                  <p id="reserved">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
-                  <p id="start">Start Time: {formatTime(room.reservation?.startTime)} {AmOrPm(room.reservation?.startTime)}</p>
-                  <p id="end">End Time: {formatTime(room.reservation?.endTime)} {AmOrPm(room.reservation?.endTime)}</p>
-                  <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
-                  <button className="button" onClick={() => handleCancelReservation(room.reservation._id)}>Cancel Reservation</button>
+  
+      <div className="room-list-wrapper">
+        <ul className="room-list">
+          {filteredRooms.length > 0 ? (
+            filteredRooms.map((room) => (
+              <li
+                key={room._id}
+                className={room.isReserved ? 'room-reserved' : 'room-available'}
+              >
+                <div className="room-header">
+                  <span
+                    className={`status-circle ${
+                      room.isReserved ? 'status-red' : 'status-green'
+                    }`}
+                  ></span>
+                  <h2 id="room-name">Room: {room.name || 'Unnamed Room'}</h2>
                 </div>
-              ) : (
-                <div>
-                  <p id="room-status">Room is available</p>
-                  <span>{room.maxCapacity} Person</span>
-                </div>
-              )}
-            </li>
-          ))
-        ) : (
-          <p id="room-status">No rooms available.</p>
-        )}
-      </ul>
+                <p id="category">Category: {room.category || 'N/A'}</p>
+  
+                {room.isReserved ? (
+                  <div>
+                    <p id="reserved">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
+                    <p id="start">
+                      Start Time: {formatTime(room.reservation?.startTime)}{' '}
+                      {AmOrPm(room.reservation?.startTime)}
+                    </p>
+                    <p id="end">
+                      End Time: {formatTime(room.reservation?.endTime)}{' '}
+                      {AmOrPm(room.reservation?.endTime)}
+                    </p>
+                    <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
+                    <button
+                      className="button"
+                      onClick={() => handleCancelReservation(room.reservation._id)}
+                    >
+                      Cancel Reservation
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <p id="room-status-g">Room is available</p>
+                    <span id="capacity">{room.maxCapacity} Max</span>
+                  </div>
+                )}
+              </li>
+            ))
+          ) : (
+            <p id="room-status-r">No rooms available.</p>
+          )}
+        </ul>
+      </div>
     </div>
   );
+  
+  
 };
 
 export default RoomList;

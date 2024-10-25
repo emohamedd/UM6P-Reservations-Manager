@@ -1,8 +1,8 @@
-body{
+body{ 
     margin-top: 0;
     /* overflow-y: hidden; */
     /* padding: 0; */
-  }
+}
 
   
 .header {
@@ -10,13 +10,17 @@ body{
   justify-content: center; /* Space out elements */
   align-items: center; /* Center vertically */
   padding: 20px 40px; /* Add padding */
-  background: linear-gradient(90deg, #e45a0a, #ffffff); /* Gradient background */
+  background: linear-gradient(90deg, #e45a0a 0%, #ffffffc5 50%, #e45a0a 100%); /* Initial gradient background */
   color: white; /* Text color */
-  width: 100%; /* Full width */
+  width: 40%; /* Full width */
   height: fit-content;
+  margin-top: 10px;
   margin-bottom: 50px; /* Add space below header */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  border-radius: 40px;
+  animation: gradientShift 5s infinite linear; /* Apply the gradient animation */
 }
+
 
 .logos {
   display: flex;
@@ -26,7 +30,7 @@ body{
 }
 
 .logo-image {
-  height: 40px; /* Set logo height */
+  height: 50px; /* Set logo height */
   margin-right: 10px; /* Space between logo and app name */
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
