@@ -7,6 +7,7 @@ const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [notification, setNotification] = useState(null); // Notification state
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('all'); // New state for the selected filter
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -23,7 +24,7 @@ const RoomList = () => {
 
   // Ensure categories are computed safely after rooms are loaded
   const categories = [...new Set(rooms.map(room => room.category))];
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       const updatedRooms = rooms.map(room => {
@@ -39,12 +40,23 @@ const RoomList = () => {
   }, [rooms]);
 
   // Filtered rooms logic inside the component body
-  const filteredRooms = selectedCategory
-    ? rooms.filter(room => room.category === selectedCategory)
-    : rooms;
+  const filteredRooms = rooms.filter(room => {
+    const categoryMatch = selectedCategory ? room.category === selectedCategory : true;
+    const filterMatch =
+      selectedFilter === 'all'
+        ? true
+        : selectedFilter === 'reserved'
+        ? room.isReserved
+        : !room.isReserved;
+    return categoryMatch && filterMatch;
+  });
 
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    setSelectedFilter(event.target.value);
   };
 
   const formatTime = (timeString) => {
@@ -79,16 +91,28 @@ const RoomList = () => {
 
   return (
     <div className="room-list-container">
-      <label htmlFor="category-select">Select Category:</label>
-      <select id="category-select" onChange={handleCategoryChange}>
-        <option value="">All Categories</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
-  
+      <div className='filter-fields'>
+        <div id="category-field">
+        <label htmlFor="category-select">Select Category:</label>
+        <select id="category-select" onChange={handleCategoryChange}>
+          <option value="">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        </div>
+
+       <div id="status-field">
+       <label htmlFor="category-select">Room Filter:</label>
+        <select id="category-select" onChange={handleFilterChange}>
+          <option value="all">All Rooms</option>
+          <option value="reserved">Reserved Rooms</option>
+          <option value="available">Available Rooms</option>
+        </select>
+       </div>
+      </div>
       <div className="room-list-wrapper">
         <ul className="room-list">
           {filteredRooms.length > 0 ? (
@@ -135,14 +159,15 @@ const RoomList = () => {
               </li>
             ))
           ) : (
-            <p id="room-status-r">No rooms available.</p>
+            <p id="room-status-r">No Reserved Rooms.</p>
           )}
         </ul>
       </div>
+      {notification && (
+        <Notification message={notification.message} type={notification.type} />
+      )}
     </div>
   );
-  
-  
 };
 
 export default RoomList;
