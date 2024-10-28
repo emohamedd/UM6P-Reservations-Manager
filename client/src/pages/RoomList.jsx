@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import API from '../services/api.js';
 import './RoomList.css'; // Ensure CSS file is correctly imported
 import Notification from '../notification/notification.jsx'; // Import your Notification component
+import AgendaView from '../components/AgendaView'; // Import the AgendaView component
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [notification, setNotification] = useState(null); // Notification state
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all'); // New state for the selected filter
+  const [view, setView] = useState('rooms'); // New state for toggling views
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -24,7 +26,7 @@ const RoomList = () => {
 
   // Ensure categories are computed safely after rooms are loaded
   const categories = [...new Set(rooms.map(room => room.category))];
-
+  
   useEffect(() => {
     const interval = setInterval(() => {
       const updatedRooms = rooms.map(room => {
@@ -57,6 +59,10 @@ const RoomList = () => {
 
   const handleFilterChange = (event) => {
     setSelectedFilter(event.target.value);
+  };
+
+  const handleViewChange = (event) => {
+    setView(event.target.value);
   };
 
   const formatTime = (timeString) => {
@@ -93,76 +99,90 @@ const RoomList = () => {
     <div className="room-list-container">
       <div className='filter-fields'>
         <div id="category-field">
-        <label htmlFor="category-select">Select Category:</label>
-        <select id="category-select" onChange={handleCategoryChange}>
-          <option value="">All Categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
+          <label htmlFor="category-select">Select Category:</label>
+          <select id="category-select" onChange={handleCategoryChange}>
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
         </div>
 
-       <div id="status-field">
-       <label htmlFor="category-select">Room Filter:</label>
-        <select id="category-select" onChange={handleFilterChange}>
-          <option value="all">All Rooms</option>
-          <option value="reserved">Reserved Rooms</option>
-          <option value="available">Available Rooms</option>
-        </select>
-       </div>
+        <div id="status-field">
+          <label htmlFor="filter-select">Room Filter:</label>
+          <select id="filter-select" onChange={handleFilterChange}>
+            <option value="all">All Rooms</option>
+            <option value="reserved">Reserved Rooms</option>
+            <option value="available">Available Rooms</option>
+          </select>
+        </div>
+
+        <div id="view-field">
+          <label htmlFor="view-select">View:</label>
+          <select id="view-select" onChange={handleViewChange}>
+            <option value="rooms">Rooms View</option>
+            <option value="agenda">Agenda View</option>
+          </select>
+        </div>
       </div>
-      <div className="room-list-wrapper">
-        <ul className="room-list">
-          {filteredRooms.length > 0 ? (
-            filteredRooms.map((room) => (
-              <li
-                key={room._id}
-                className={room.isReserved ? 'room-reserved' : 'room-available'}
-              >
-                <div className="room-header">
-                  <span
-                    className={`status-circle ${
-                      room.isReserved ? 'status-red' : 'status-green'
-                    }`}
-                  ></span>
-                  <h2 id="room-name">Room: {room.name || 'Unnamed Room'}</h2>
-                </div>
-                <p id="category">Category: {room.category || 'N/A'}</p>
-  
-                {room.isReserved ? (
-                  <div>
-                    <p id="reserved">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
-                    <p id="start">
-                      Start Time: {formatTime(room.reservation?.startTime)}{' '}
-                      {AmOrPm(room.reservation?.startTime)}
-                    </p>
-                    <p id="end">
-                      End Time: {formatTime(room.reservation?.endTime)}{' '}
-                      {AmOrPm(room.reservation?.endTime)}
-                    </p>
-                    <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
-                    <button
-                      className="button"
-                      onClick={() => handleCancelReservation(room.reservation._id)}
-                    >
-                      Cancel Reservation
-                    </button>
+
+      {view === 'rooms' ? (
+        <div className="room-list-wrapper">
+          <ul className="room-list">
+            {filteredRooms.length > 0 ? (
+              filteredRooms.map((room) => (
+                <li
+                  key={room._id}
+                  className={room.isReserved ? 'room-reserved' : 'room-available'}
+                >
+                  <div className="room-header">
+                    <span
+                      className={`status-circle ${
+                        room.isReserved ? 'status-red' : 'status-green'
+                      }`}
+                    ></span>
+                    <h2 id="room-name">Room: {room.name || 'Unnamed Room'}</h2>
                   </div>
-                ) : (
-                  <div>
-                    <p id="room-status-g">Room is available</p>
-                    <span id="capacity">{room.maxCapacity} Max</span>
-                  </div>
-                )}
-              </li>
-            ))
-          ) : (
-            <p id="room-status-r">No Reserved Rooms.</p>
-          )}
-        </ul>
-      </div>
+                  <p id="category">Category: {room.category || 'N/A'}</p>
+
+                  {room.isReserved ? (
+                    <div>
+                      <p id="reserved">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
+                      <p id="start">
+                        Start Time: {formatTime(room.reservation?.startTime)}{' '}
+                        {AmOrPm(room.reservation?.startTime)}
+                      </p>
+                      <p id="end">
+                        End Time: {formatTime(room.reservation?.endTime)}{' '}
+                        {AmOrPm(room.reservation?.endTime)}
+                      </p>
+                      <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
+                      <button
+                        className="button"
+                        onClick={() => handleCancelReservation(room.reservation._id)}
+                      >
+                        Cancel Reservation
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <p id="room-status-g">Room is available</p>
+                      <span id="capacity">{room.maxCapacity} Max</span>
+                    </div>
+                  )}
+                </li>
+              ))
+            ) : (
+              <p id="room-status-r">No rooms available.</p>
+            )}
+          </ul>
+        </div>
+      ) : (
+        <AgendaView />
+      )}
+
       {notification && (
         <Notification message={notification.message} type={notification.type} />
       )}

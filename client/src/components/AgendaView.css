@@ -1,0 +1,71 @@
+.agenda-view {
+  padding: 20px;
+  background-color: #f4f7f8;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: max-content !important; /* Set width to max-content */
+  height: 700px !important; /* Set height to 700px */
+  overflow: auto; /* Add scroll if content overflows */
+}
+
+.rbc-calendar {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 18px; /* Increase text size */
+}
+
+.rbc-toolbar {
+  background-color: #d46626;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+  font-size: 20px; /* Increase text size */
+}
+
+.rbc-toolbar button {
+  background-color: #ff701d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 18px; /* Increase text size */
+}
+
+.rbc-toolbar button:hover {
+  background-color: #ff843d;
+}
+
+.rbc-event {
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px; /* Increase text size */
+}
+
+.rbc-event-ended {
+  background-color: #dc3545;
+  color: white;
+  padding: 5px;
+}
+
+.rbc-event-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.rbc-event-content span {
+  font-size: 16px; /* Increase text size */
+}
+
+.rbc-time-view .rbc-time-header {
+  background-color: #ff701d;
+  color: white;
+}
+
+.rbc-time-view .rbc-time-content {
+  border-top: 2px solid #ff701d;
+}

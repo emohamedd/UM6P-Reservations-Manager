@@ -4,6 +4,7 @@
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
   padding: 90px; /* Adjust padding */
+  
 }
 
 /* Reservation Form Styles */
@@ -14,6 +15,8 @@ form {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   font-family: 'Helvetica Neue', sans-serif;
+  box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+
 }
 
 /* Other styles remain the same */

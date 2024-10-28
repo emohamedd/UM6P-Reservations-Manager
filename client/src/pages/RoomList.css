@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 90%; /* Adjusted width */
+  width: 95%; /* Adjusted width */
   margin: auto;
   padding: 30px;
   background: linear-gradient(90deg, #d46626, #ffffff);
@@ -134,7 +134,14 @@ label[for="category-select"] {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  gap: 500px;
+  gap: 300px;
+  background: linear-gradient(90deg, #d46626, #ffffff);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #000000;
+  box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+    margin-bottom: 30px;
+
 }
 #category-field{
   display: flex;
@@ -293,12 +300,13 @@ ul::-webkit-scrollbar-track {
 }
 
 ul::-webkit-scrollbar-thumb {
-  background: #9e4b07;
+  background: #df6925;
   border-radius: 10px;
+  border: 1px solid #ffffff;
 }
 
 ul::-webkit-scrollbar-thumb:hover {
-  background: #d6670c;
+  background: #ff6810;
   cursor: pointer;
 }
 

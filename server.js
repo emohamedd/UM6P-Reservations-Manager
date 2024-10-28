@@ -36,9 +36,9 @@ app.listen(PORT, '0.0.0.0' , () => {
 
 const roomRoutes = require('./routes/RoomRoutes');
 const reservationRoutes = require('./routes/ReservationRoutes');
-const api = require('/api');
+// const api = require('/api');
 
 app.use('/api/rooms', roomRoutes);
 app.use('/api/reservations', reservationRoutes);
-app.use('/api', api);
+// app.use('/api', api);
 
