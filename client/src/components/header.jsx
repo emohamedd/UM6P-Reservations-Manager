@@ -5,9 +5,9 @@ import './header.css'; // Import your CSS file for styling
 
 const Header = () => {
   return (
-    <header className="header">
+    <header className="headers">
       <div className="logos">
-        <img src="./assets/UM6Ps.svg" alt="App Logo" className="logo-image" />
+        <img src="./assets/UM6Ps.svg" alt="UM6P LOGO" className="logo-image" />
       </div>
     </header>
   );

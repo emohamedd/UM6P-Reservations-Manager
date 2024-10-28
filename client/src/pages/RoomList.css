@@ -137,8 +137,8 @@ label[for="category-select"] {
   gap: 300px;
   background: linear-gradient(90deg, #d46626, #ffffff);
   padding: 20px;
-  border-radius: 10px;
-  border: 2px solid #000000;
+  border-radius: 30px;
+  /* border: 2px solid #000000; */
   box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
     margin-bottom: 30px;
 

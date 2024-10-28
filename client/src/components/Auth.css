@@ -1,0 +1,68 @@
+
+
+.auth-containers {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(45deg, #EBEBD3 40%, #EE964B 80%);
+}
+
+.auth-forms {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  text-align: center;
+}
+
+.auth-forms h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.input-groups{
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-groups label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.input-groups input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+#login-btn{
+  background-color: #d34a2d;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  width: 50%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#login-btn:hover {
+  background-color: #EB8438;
+}
+
+.errors {
+  margin-top: 1rem;
+  color: red;
+  font-size: 0.875rem;
+}
+
+.um6p-logos{
+    width: 150px;
+    height: 150px;
+}

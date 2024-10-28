@@ -4,6 +4,7 @@ import './RoomList.css'; // Ensure CSS file is correctly imported
 import Notification from '../notification/notification.jsx'; // Import your Notification component
 import AgendaView from '../components/AgendaView'; // Import the AgendaView component
 
+
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [notification, setNotification] = useState(null); // Notification state
@@ -175,7 +176,7 @@ const RoomList = () => {
                 </li>
               ))
             ) : (
-              <p id="room-status-r">No rooms available.</p>
+              <p id="room-status-r">No Reservations.</p>
             )}
           </ul>
         </div>

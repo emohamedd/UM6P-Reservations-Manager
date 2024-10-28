@@ -3,7 +3,7 @@ import './notification.css'; // You will add styles here
 
 const Notification = ({ message, type, onClose }) => {
   useEffect(() => {
-    const timer = setTimeout(onClose, 100000);
+    const timer = setTimeout(onClose, 10000);
     return () => clearTimeout(timer); // Clean up timer on component unmount
   }, [onClose]);
 
