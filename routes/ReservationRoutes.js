@@ -18,13 +18,28 @@ router.post('/', async (req, res) => {
   const { clientName, roomId, attendees, startTime, endTime, category } = req.body;
 
   try {
+    const start = new Date(startTime).toISOString(); // Use UTC format
+    const end = new Date(endTime).toISOString();
+
+
+    if (end <= start) {
+      return res.status(400).json({ message: 'End time must be later than start time.' });
+    }
+
+    if (start < new Date().toISOString()) {
+      return res.status(400).json({ message: 'Start time must be in the future.' });
+    }
+
+
     // Check for overlapping reservations
+   // Check for overlapping reservations
     const existingReservations = await Reservation.find({
       room: roomId,
       $or: [
-        { startTime: { $lt: endTime, $gt: startTime } }, // Overlaps if startTime is between existing endTime and startTime
-        { endTime: { $gt: startTime, $lt: endTime } }, // Overlaps if endTime is between existing startTime and endTime
-        { startTime: { $lte: startTime }, endTime: { $gte: endTime } } // Fully overlaps
+        { startTime: { $lt: end }, endTime: { $gt: start } },  // Partial overlap
+        { startTime: { $gte: start, $lt: end } },  // Start within range
+        { endTime: { $gt: start, $lte: end } },  // End within range
+        { startTime: { $lte: start }, endTime: { $gte: end } }  // Fully overlapping
       ]
     });
 
@@ -46,18 +61,13 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: 'Selected category does not match the room category.' });
     }
 
-    // Check if room is currently reserved
-    if (room.isReserved) {
-      return res.status(409).json({ message: 'Room is already reserved.' });
-    }
-
     // Create a new reservation
     const newReservation = new Reservation({
       clientName,
       room: room._id, // Use room ID
       attendees,
-      startTime,
-      endTime,
+      startTime: start,
+      endTime: end,
       category, // Include category
     });
 
@@ -75,7 +85,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Delete a reservation
 router.delete('/:reservationId', async (req, res) => {
   const { reservationId } = req.params;
 

@@ -1,4 +1,4 @@
-/* General Reset and Styling */
+
 body {
     margin: 0;
     padding: 0;
@@ -13,14 +13,14 @@ body {
     width: 100vw;
   }
   
-  /* Left panel: Building image */
+ 
   .left-panel {
     width: 50%;
     background: url('../../public/assets/auth4.jpg') no-repeat center center;
     background-size: cover;
   }
   
-  /* Right panel: Form, logo, and welcome text */
+ 
   .right-panel {
     width: 50%;
     background-color: #EBEBD3;
@@ -32,7 +32,7 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
   
-  /* UM6P Logo */
+ 
   .um6p-logo {
     height: 60px;
     margin-bottom: 20px;
@@ -51,7 +51,7 @@ body {
     font-weight: 300;
   }
   
-  /* Form Styling */
+ 
   .auth-form {
     width: 80%;
     display: flex;
@@ -76,13 +76,13 @@ body {
     font-size: 1rem;
   }
   
-  /* Error Message */
+ 
   .error {
     color: red;
     font-size: 1rem;
   }
   
-  /* Login Button */
+ 
   #login-btn {
    
     width: 20%;
@@ -100,7 +100,7 @@ body {
     ;
   }
   
-  /* Footer Styling */
+ 
   footer {
     margin-top: 20px;
     font-size: 0.9rem;
@@ -108,9 +108,9 @@ body {
     text-align: center;
   }
   
-  /* --- Media Queries for Responsive Design --- */
+ 
   
-  /* Portrait Mode: Building image on top, form on bottom */
+ 
   @media (orientation: portrait) {
     .auth-container {
       flex-direction: column;
@@ -124,23 +124,23 @@ body {
     .right-panel {
       width: 100%;
       height: 50%;
-      box-shadow: none; /* Remove shadow for a cleaner look */
+      box-shadow: none;
       padding: 20px;
     }
   
     .auth-form {
-      width: 90%; /* Make the form a bit wider */
+      width: 90%;
     }
   }
   
-  /* Small Screens (e.g., phones) */
+ 
   @media (max-width: 600px) {
     .auth-container {
       flex-direction: column;
     }
   
     .left-panel {
-      height: 40%; /* Adjust height for smaller devices */
+      height: 40%;
     }
   
     .right-panel {

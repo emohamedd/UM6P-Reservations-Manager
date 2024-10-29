@@ -1,16 +1,16 @@
-/* Container for centering the form */
+
 .container {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  padding: 90px; /* Adjust padding */
+  justify-content: center;
+  align-items: center;
+  padding: 90px;
   
 }
 
-/* Reservation Form Styles */
+
 form {
   background-color: #f4f7f8;
-  margin: 0; /* No margin needed, centered by container */
+  margin: 0;
   padding: 40px 80px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -19,7 +19,7 @@ form {
 
 }
 
-/* Other styles remain the same */
+
 h2 {
   font-size: 30px;
   margin-bottom: 30px;
@@ -45,12 +45,12 @@ select {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 16px;
-  background-color: #fff; /* Ensure consistent background color */
-  color: #333; /* Ensure consistent text color */
+  background-color: #fff;
+  color: #333;
   cursor: pointer;
 }
 
-/* Add focus styles for better accessibility */
+
 input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="datetime-local"]:focus,
@@ -74,7 +74,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #ff701d; /* Darker color on hover */
-  transform: translateY(-2px); /* Lift effect on hover */
+  background-color: #ff701d;
+  transform: translateY(-2px);
   cursor: pointer;
 }

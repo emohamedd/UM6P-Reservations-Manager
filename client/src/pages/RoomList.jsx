@@ -28,19 +28,23 @@ const RoomList = () => {
   // Ensure categories are computed safely after rooms are loaded
   const categories = [...new Set(rooms.map(room => room.category))];
   
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const updatedRooms = rooms.map(room => {
-        if (room.isReserved && new Date(room.reservation.endTime) <= new Date()) {
-          return { ...room, isReserved: false, reservation: null };
-        }
-        return room;
-      });
-      setRooms(updatedRooms);
-    }, 60000); // Check every minute
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [rooms]);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const updatedRooms = rooms.map((room) => {
+          const now = new Date();
+          const reservationEndTime = new Date(room.reservation?.endTime);
+    
+          if (room.isReserved && reservationEndTime <= now) {
+            return { ...room, isReserved: false, reservation: null };
+          }
+          return room;
+        });
+        setRooms(updatedRooms);
+      }, 60000); // Check every minute
+    
+      return () => clearInterval(interval); // Cleanup on unmount
+    }, [rooms]);
+  
 
   // Filtered rooms logic inside the component body
   const filteredRooms = rooms.filter(room => {

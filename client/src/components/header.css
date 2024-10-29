@@ -1,53 +1,53 @@
 body{ 
     margin-top: 0;
-    /* overflow-y: hidden; */
-    /* padding: 0; */
+   
+   
 }
 
   
 .headers {
   display: flex;
-  justify-content: center; /* Space out elements */
-  align-items: center; /* Center vertically */
-  padding: 20px 40px; /* Add padding */
-  background: linear-gradient(90deg, #e45a0a 0%, #ffffffc5 50%, #e45a0a 100%); /* Initial gradient background */
-  color: white; /* Text color */
-  width: 40%; /* Full width */
+  justify-content: center;
+  align-items: center;
+  padding: 20px 40px;
+  background: linear-gradient(90deg, #e45a0a 0%, #ffffffc5 50%, #e45a0a 100%);
+  color: white;
+  width: 40%;
   height: fit-content;
   margin-top: 10px;
-  margin-bottom: 50px; /* Add space below header */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+  margin-bottom: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 40px;
-  animation: gradientShift 5s infinite linear; /* Apply the gradient animation */
+  animation: gradientShift 5s infinite linear;
 }
 
 
 .logos {
   display: flex;
-  align-items: center; /* Center logo and app name */
-  justify-content: center; /* Center horizontally */
-  animation: fadeOut 3s ease-in-out infinite; /* Logo fade animation */
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 3s ease-in-out infinite;
 }
 
 .logo-image {
-  height: 50px; /* Set logo height */
-  margin-right: 10px; /* Space between logo and app name */
-  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+  height: 50px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
 }
 
 .logo-image:hover {
-  transform: scale(1.1); /* Slightly enlarge logo on hover */
+  transform: scale(1.1);
   cursor: pointer;
 }
 
 .app-name {
-  font-size: 24px; /* Increase font size */
-  font-weight: bold; /* Make text bold */
-  margin-left: 10px; /* Space between logo and app name */
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 
-/* Keyframes for fadeOut animation */
+
 @keyframes fadeOut {
   0%, 100% {
     opacity: 1;

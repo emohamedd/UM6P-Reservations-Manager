@@ -6,15 +6,15 @@
     border-radius: 8px;
     color: #000000;
     z-index: 1000;
-    animation: fadeOut 3s forwards; /* Fades out after 3 seconds */
+    animation: fadeOut 3s forwards;
   }
   
   .notification.success {
-    background-color: #4caf50; /* Green for success */
+    background-color: #4caf50;
   }
   
   .notification.error {
-    background-color: #f44336; /* Red for error */
+    background-color: #f44336;
   }
   
   @keyframes fadeOut {

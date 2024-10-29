@@ -1,16 +1,16 @@
-/* Global Styles */
+
 body {
   overflow-x: hidden;
   font-family: 'Helvetica Neue', sans-serif;
 }
 
-/* Main Room List Container */
+
 .room-list-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 95%; /* Adjusted width */
+  width: 95%;
   margin: auto;
   padding: 30px;
   background: linear-gradient(90deg, #d46626, #ffffff);
@@ -23,11 +23,11 @@ body {
   align-items: center;
   flex-wrap: wrap;
   margin-top: 50px;
-  /* padding-bottom: 50px; */
+ 
   width: 100%;
 }
 
-/* Category Select */
+
 #category-select {
   margin-bottom: 20px;
   padding: 12px;
@@ -49,7 +49,7 @@ label[for="category-select"] {
   color: #1b0f0f;
 }
 
-/* Header Styles */
+
 
 #room-name {
   font-size: 30px;
@@ -57,7 +57,7 @@ label[for="category-select"] {
   color: #383527;
   margin-bottom: 20px;
 }
-/* Room List Styles */
+
 .room-list {
   display: flex;
   flex-wrap: wrap;
@@ -66,7 +66,7 @@ label[for="category-select"] {
   padding: 0;
 }
 
-/* Room Items */
+
 .room-list li {
   width: 20rem;
   margin: 15px;
@@ -77,7 +77,7 @@ label[for="category-select"] {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Status Circle */
+
 .status-circle {
   width: 15px;
   height: 15px;
@@ -85,7 +85,7 @@ label[for="category-select"] {
   margin-right: 10px;
 }
 
-/* Status Colors */
+
 .available {
   background-color: #28a745;
 }
@@ -94,7 +94,7 @@ label[for="category-select"] {
   background-color: #dc3545;
 }
 
-/* Pagination Styles */
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -116,7 +116,7 @@ label[for="category-select"] {
   cursor: not-allowed;
 }
 
-/* Available Room Styles */
+
 .room-available {
   background: linear-gradient(45deg, #b1531e 40%, #ff701d 80%);
   color: #fff;
@@ -138,7 +138,7 @@ label[for="category-select"] {
   background: linear-gradient(90deg, #d46626, #ffffff);
   padding: 20px;
   border-radius: 30px;
-  /* border: 2px solid #000000; */
+ 
   box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
     margin-bottom: 30px;
 
@@ -170,7 +170,7 @@ label[for="category-select"] {
   height: 220px;
   flex-direction: column;
   background: linear-gradient(45deg, #df6925 40%, #b1531e 80%);
-  /* transform:rotate(360deg); */
+ 
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
   border: 4px solid #ffa67d;
 }
@@ -196,7 +196,7 @@ label[for="category-select"] {
   border: 3px solid #ff6969;
 }
 
-/* Reservation Details for Reserved Rooms */
+
 .room-reserved-details {
   margin-top: 15px;
   padding: 10px;
@@ -215,7 +215,7 @@ label[for="category-select"] {
   font-weight: bold;
 }
 
-/* Media Queries for Responsiveness */
+
 @media (max-width: 600px) {
   h1 {
     font-size: 28px;
@@ -234,7 +234,7 @@ label[for="category-select"] {
   }
 }
 
-/* Button Styles */
+
 .button {
   background: linear-gradient(145deg, rgb(247, 50, 50), rgb(190, 58, 54));
   color: white;
@@ -258,7 +258,7 @@ label[for="category-select"] {
   box-shadow: 0 0 0 3px rgba(236, 91, 91, 0.5);
 }
 
-/* Additional Specific Styles */
+
 #reserved {
   font-size: x-large;
   font-weight: bolder;
@@ -279,7 +279,7 @@ label[for="category-select"] {
   color: #ffffff;
 }
 
-/* Optional: Style the scrollbar */
+
 ul {
   padding: 20px;
   width: 5%;

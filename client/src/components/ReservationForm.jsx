@@ -14,7 +14,15 @@ const ReservationForm = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [notification, setNotification] = useState(null); // State for notifications
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (notification) {
+      const timer = setTimeout(() => setNotification(null), 3000); // 3-second auto-hide
+      return () => clearTimeout(timer); // Cleanup on unmount
+    }
+  }, [notification]);
+  
   useEffect(() => {
     // Fetch available rooms for the dropdown
     const fetchRooms = async () => {
@@ -24,7 +32,9 @@ const ReservationForm = () => {
         const uniqueCategories = [...new Set(response.data.map(room => room.category))];
         setCategories(uniqueCategories);
       } catch (error) {
-        setNotification({ message: 'Error fetching rooms', type: 'error' }); // Set error notification
+        setNotification({ message: 'Error fetching rooms', type: 'error' });
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -53,10 +63,14 @@ const ReservationForm = () => {
     }
     
     const startTimestamp = new Date(startTime).getTime();
-  const endTimestamp = new Date(endTime).getTime();
-
+    const endTimestamp = new Date(endTime).getTime();
+    const now = Date.now();
   if (endTimestamp <= startTimestamp) {
     setNotification({ message: 'End time must be later than start time.', type: 'error' });
+    return;
+  }
+  if (startTimestamp < now) {
+    setNotification({ message: 'Start time must be in the future.', type: 'error' });
     return;
   }
 
@@ -101,7 +115,6 @@ const ReservationForm = () => {
           onClose={() => setNotification(null)} // Clear notification on close
         />
       )}
-
       <form onSubmit={handleSubmit}>
         <h2>Reservation Form</h2>
 
@@ -147,6 +160,7 @@ const ReservationForm = () => {
           <label>Number of Attendees</label>
           <input
             type="number"
+            min="1"
             value={attendees}
             onChange={(e) => setAttendees(e.target.value)}
             required
@@ -173,8 +187,8 @@ const ReservationForm = () => {
           />
         </div>
 
-        <button type="submit">Reserve</button>
-      </form>
+        <button type="submit" disabled={notification !== null}>Reserve</button>
+        </form>
     </div>
   );
 };
