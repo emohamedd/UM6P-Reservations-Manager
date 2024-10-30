@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import API from '../services/api.js';
-import './RoomList.css'; // Ensure CSS file is correctly imported
-import Notification from '../notification/notification.jsx'; // Import your Notification component
-import AgendaView from '../components/AgendaView'; // Import the AgendaView component
-
+import styles from './RoomList.css'; 
+import Notification from '../notification/notification.jsx'; 
+import AgendaView from '../components/AgendaView'; 
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
-  const [notification, setNotification] = useState(null); // Notification state
+  const [notification, setNotification] = useState(null); 
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('all'); // New state for the selected filter
-  const [view, setView] = useState('rooms'); // New state for toggling views
+  const [selectedFilter, setSelectedFilter] = useState('all'); 
+  const [view, setView] = useState('rooms'); 
 
+  const intervalRef = useRef(null); // Track the interval to clear it safely
+
+  // Fetch rooms once when the component mounts
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -25,29 +27,30 @@ const RoomList = () => {
     fetchRooms();
   }, []);
 
-  // Ensure categories are computed safely after rooms are loaded
+  // Categories computed safely after rooms load
   const categories = [...new Set(rooms.map(room => room.category))];
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        const updatedRooms = rooms.map((room) => {
+
+  // Check and update reservations periodically
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setRooms((prevRooms) =>
+        prevRooms.map((room) => {
           const now = new Date();
-          const reservationEndTime = new Date(room.reservation?.endTime);
-    
-          if (room.isReserved && reservationEndTime <= now) {
+          const endTime = new Date(room.reservation?.endTime);
+
+          if (room.isReserved && endTime <= now) {
             return { ...room, isReserved: false, reservation: null };
           }
           return room;
-        });
-        setRooms(updatedRooms);
-      }, 60000); // Check every minute
-    
-      return () => clearInterval(interval); // Cleanup on unmount
-    }, [rooms]);
-  
+        })
+      );
+    }, 60000); // Every 1 minute
 
-  // Filtered rooms logic inside the component body
-  const filteredRooms = rooms.filter(room => {
+    return () => clearInterval(intervalRef.current); // Cleanup on unmount
+  }, []);
+
+  // Filter logic
+  const filteredRooms = rooms.filter((room) => {
     const categoryMatch = selectedCategory ? room.category === selectedCategory : true;
     const filterMatch =
       selectedFilter === 'all'
@@ -58,30 +61,17 @@ const RoomList = () => {
     return categoryMatch && filterMatch;
   });
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
-  const handleFilterChange = (event) => {
-    setSelectedFilter(event.target.value);
-  };
-
-  const handleViewChange = (event) => {
-    setView(event.target.value);
-  };
+  const handleCategoryChange = (event) => setSelectedCategory(event.target.value);
+  const handleFilterChange = (event) => setSelectedFilter(event.target.value);
+  const handleViewChange = (event) => setView(event.target.value);
 
   const formatTime = (timeString) => {
     if (!timeString) return 'N/A';
     const date = new Date(timeString);
-    const hours = date.getHours();
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+    return `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
   };
 
-  const AmOrPm = (timeString) => {
-    const date = new Date(timeString);
-    return date.getHours() >= 12 ? 'PM' : 'AM';
-  };
+  const AmOrPm = (timeString) => new Date(timeString).getHours() >= 12 ? 'PM' : 'AM';
 
   const handleCancelReservation = async (reservationId) => {
     try {
@@ -90,7 +80,7 @@ const RoomList = () => {
 
       setRooms((prevRooms) =>
         prevRooms.map((room) =>
-          room.reservation && room.reservation._id === reservationId
+          room.reservation?._id === reservationId
             ? { ...room, isReserved: false, reservation: null }
             : room
         )
@@ -102,10 +92,14 @@ const RoomList = () => {
 
   return (
     <div className="room-list-container">
-      <div className='filter-fields'>
+      <div className="filter-fields">
         <div id="category-field">
           <label htmlFor="category-select">Select Category:</label>
-          <select id="category-select" onChange={handleCategoryChange}>
+          <select
+            id="category-select"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
             <option value="">All Categories</option>
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -117,7 +111,11 @@ const RoomList = () => {
 
         <div id="status-field">
           <label htmlFor="filter-select">Room Filter:</label>
-          <select id="filter-select" onChange={handleFilterChange}>
+          <select
+            id="filter-select"
+            value={selectedFilter}
+            onChange={handleFilterChange}
+          >
             <option value="all">All Rooms</option>
             <option value="reserved">Reserved Rooms</option>
             <option value="available">Available Rooms</option>
@@ -126,7 +124,7 @@ const RoomList = () => {
 
         <div id="view-field">
           <label htmlFor="view-select">View:</label>
-          <select id="view-select" onChange={handleViewChange}>
+          <select id="view-select" value={view} onChange={handleViewChange}>
             <option value="rooms">Rooms View</option>
             <option value="agenda">Agenda View</option>
           </select>
@@ -154,33 +152,21 @@ const RoomList = () => {
 
                   {room.isReserved ? (
                     <div>
-                      <p id="reserved">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
-                      <p id="start">
-                        Start Time: {formatTime(room.reservation?.startTime)}{' '}
-                        {AmOrPm(room.reservation?.startTime)}
-                      </p>
-                      <p id="end">
-                        End Time: {formatTime(room.reservation?.endTime)}{' '}
-                        {AmOrPm(room.reservation?.endTime)}
-                      </p>
-                      <p id="attendees">Attendees: {room.reservation?.attendees || 'N/A'}</p>
-                      <button
-                        className="button"
-                        onClick={() => handleCancelReservation(room.reservation._id)}
-                      >
+                      <p>Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
+                      <p>Start: {formatTime(room.reservation?.startTime)} {AmOrPm(room.reservation?.startTime)}</p>
+                      <p>End: {formatTime(room.reservation?.endTime)} {AmOrPm(room.reservation?.endTime)}</p>
+                      <p>Attendees: {room.reservation?.attendees || 'N/A'}</p>
+                      <button onClick={() => handleCancelReservation(room.reservation._id)}>
                         Cancel Reservation
                       </button>
                     </div>
                   ) : (
-                    <div>
-                      <p id="room-status-g">Room is available</p>
-                      <span id="capacity">{room.maxCapacity} Max</span>
-                    </div>
+                    <p>Room is available</p>
                   )}
                 </li>
               ))
             ) : (
-              <p id="room-status-r">No Reservations.</p>
+              <p>No Reservations.</p>
             )}
           </ul>
         </div>
@@ -188,9 +174,7 @@ const RoomList = () => {
         <AgendaView />
       )}
 
-      {notification && (
-        <Notification message={notification.message} type={notification.type} />
-      )}
+      {notification && <Notification {...notification} />}
     </div>
   );
 };

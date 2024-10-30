@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import './AgendaView.css'; // Import custom CSS
+import styles from './AgendaView.css'; // Import custom CSS
 import API from '../services/api.js';
 
 const localizer = momentLocalizer(moment);

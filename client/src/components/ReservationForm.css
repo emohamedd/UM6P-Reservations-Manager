@@ -1,80 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-.container {
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.reservation-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 90px;
-  
+  height: 50vh;
+  padding: 100px;
+  padding-bottom: 120px;
 }
-
 
 form {
-  background-color: #f4f7f8;
-  margin: 0;
-  padding: 40px 80px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: 'Helvetica Neue', sans-serif;
-  box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
-
+  background: rgba(255, 255, 255, 0.7);
+  padding: 40px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 400px;
 }
 
-
 h2 {
-  font-size: 30px;
-  margin-bottom: 30px;
   text-align: center;
-  color: #000000;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.input-group {
+  margin-bottom: 20px;
 }
 
 label {
-  font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 8px;
   display: block;
-  margin-bottom: 10px;
-  color: #000000;
+  color: #444;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="datetime-local"],
-select {
+input, select {
   width: 100%;
   padding: 12px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  background-color: #fff;
-  color: #333;
-  cursor: pointer;
-}
-
-
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="datetime-local"]:focus,
-select:focus {
-  border-color: #000000;
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-}
-
-button[type="submit"] {
-  display: inline-block;
-  width: 100%;
-  padding: 12px;
-  background-color: #c75411;
-  color: white;
-  font-size: 22px;
+  margin-top: 5px;
   border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s, transform 0.3s;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
-button[type="submit"]:hover {
-  background-color: #ff701d;
-  transform: translateY(-2px);
+input:focus, select:focus {
+  outline: none;
+  transform: scale(1.02);
+}
+
+#reserve-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  transition: background-color 0.3s;
   cursor: pointer;
+}
+
+#reserve-btn:hover {
+  background-color: #ff784e;
 }

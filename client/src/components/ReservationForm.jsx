@@ -1,6 +1,6 @@
 import './ReservationForm.css';
 import React, { useState, useEffect } from 'react';
-import API from '../services/api';  // Assuming API is a helper for Axios requests
+import API from '../services/api'; 
 import axios from 'axios';
 import Notification from '../notification/notification.jsx';
 
@@ -8,23 +8,22 @@ const ReservationForm = () => {
   const [clientName, setClientName] = useState('');
   const [roomId, setRoomId] = useState('');
   const [attendees, setAttendees] = useState('');
-  const [startTime, setStartTime] = useState(''); // Start time state
-  const [endTime, setEndTime] = useState(''); // End time state
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [rooms, setRooms] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [notification, setNotification] = useState(null); // State for notifications
+  const [notification, setNotification] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (notification) {
-      const timer = setTimeout(() => setNotification(null), 3000); // 3-second auto-hide
-      return () => clearTimeout(timer); // Cleanup on unmount
+      const timer = setTimeout(() => setNotification(null), 3000);
+      return () => clearTimeout(timer);
     }
   }, [notification]);
-  
+
   useEffect(() => {
-    // Fetch available rooms for the dropdown
     const fetchRooms = async () => {
       try {
         const response = await API.get('/rooms');
@@ -37,158 +36,101 @@ const ReservationForm = () => {
         setLoading(false);
       }
     };
-
     fetchRooms();
   }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (!clientName || !roomId || !attendees || !startTime || !endTime || !selectedCategory) {
       setNotification({ message: 'Please fill in all required fields.', type: 'error' });
       return;
     }
 
-    
     const selectedRoom = rooms.find(room => room._id === roomId);
+    if (!selectedRoom || attendees > selectedRoom.maxCapacity) {
+      setNotification({
+        message: selectedRoom ? 
+          `Attendees exceed room capacity of ${selectedRoom.maxCapacity}.` :
+          'Please select a valid room.', 
+        type: 'error'
+      });
+      return;
+    }
 
-    if (!selectedRoom) {
-      setNotification({ message: 'Please select a room.', type: 'error' }); // Error notification
-      return;
-    }
-    // Check if attendees exceed room capacity
-    if (attendees > selectedRoom.maxCapacity) {
-      setNotification({ message: `Attendees exceed room capacity of ${selectedRoom.maxCapacity}.`, type: 'error' });
-      return;
-    }
-    
     const startTimestamp = new Date(startTime).getTime();
     const endTimestamp = new Date(endTime).getTime();
-    const now = Date.now();
-  if (endTimestamp <= startTimestamp) {
-    setNotification({ message: 'End time must be later than start time.', type: 'error' });
-    return;
-  }
-  if (startTimestamp < now) {
-    setNotification({ message: 'Start time must be in the future.', type: 'error' });
-    return;
-  }
+    if (endTimestamp <= startTimestamp || startTimestamp < Date.now()) {
+      setNotification({ message: 'Invalid time range.', type: 'error' });
+      return;
+    }
 
-    const reservationData = {
-      clientName,
-      roomId,
-      attendees,
-      startTime,
-      endTime,
-      category: selectedCategory,
-    };
-
+    const reservationData = { clientName, roomId, attendees, startTime, endTime, category: selectedCategory };
     try {
-      const response = await axios.post('http://localhost:5000/api/reservations', reservationData);
-      setNotification({ message: 'Reservation added successfully!', type: 'success' }); // Success notification
-
-
-        window.location.reload();
-      // Reset form fields after successful reservation
+      await axios.post('http://localhost:5000/api/reservations', reservationData);
+      setNotification({ message: 'Reservation added successfully!', type: 'success' });
       setClientName('');
       setRoomId('');
       setAttendees('');
       setStartTime('');
       setEndTime('');
+      window.location.reload();
     } catch (error) {
-      setNotification({ message: 'Error adding reservation', type: 'error' }); // Error notification
+      setNotification({ message: 'Error adding reservation', type: 'error' });
       console.error('Error adding reservation:', error);
     }
   };
 
   const filteredRooms = selectedCategory
-    ? rooms.filter((room) => room.category === selectedCategory)
+    ? rooms.filter(room => room.category === selectedCategory)
     : rooms;
-  
+
   return (
-    <div className='container'>
-      {/* Display notification if it exists */}
+    <div className="reservation-container">
       {notification && (
-        <Notification
+        <Notification 
           message={notification.message}
           type={notification.type}
-          onClose={() => setNotification(null)} // Clear notification on close
+          onClose={() => setNotification(null)}
         />
       )}
       <form onSubmit={handleSubmit}>
-        <h2>Reservation Form</h2>
-
-        <div>
+        <h2>Make a Reservation</h2>
+        <div className="input-group">
           <label>Client Name</label>
-          <input
-            type="text"
-            value={clientName}
-            onChange={(e) => setClientName(e.target.value)}
-            required
-          />
+          <input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} required />
         </div>
-        <div>
+        <div className="input-group">
           <label>Select Category</label>
           <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
             <option value="">Select a Category</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
+            {categories.map(category => <option key={category}>{category}</option>)}
           </select>
         </div>
-
-        <div>
+        <div className="input-group">
           <label>Select Room</label>
-          <select
-            value={roomId}
-            onChange={(e) => setRoomId(e.target.value)}
-            disabled={!selectedCategory}
-            required
-          >
+          <select value={roomId} onChange={(e) => setRoomId(e.target.value)} required disabled={!selectedCategory}>
             <option value="">Select a Room</option>
-            {filteredRooms.map((room) => (
+            {filteredRooms.map(room => (
               <option key={room._id} value={room._id}>
                 {room.name} (Capacity: {room.maxCapacity})
               </option>
             ))}
           </select>
         </div>
-
-        <div>
+        <div className="input-group">
           <label>Number of Attendees</label>
-          <input
-            type="number"
-            min="1"
-            value={attendees}
-            onChange={(e) => setAttendees(e.target.value)}
-            required
-          />
+          <input type="number" min="1" value={attendees} onChange={(e) => setAttendees(e.target.value)} required />
         </div>
-
-        <div>
+        <div className="input-group">
           <label>Reservation Start Time</label>
-          <input
-            type="datetime-local" // Using datetime-local input for picking date & time
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required
-          />
+          <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
         </div>
-
-        <div>
+        <div className="input-group">
           <label>Reservation End Time</label>
-          <input
-            type="datetime-local" // Using datetime-local input for picking date & time
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required
-          />
+          <input type="datetime-local" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
         </div>
-
-        <button type="submit" disabled={notification !== null}>Reserve</button>
-        </form>
+        <button id="reserve-btn" type="submit">Reserve Now</button>
+      </form>
     </div>
   );
 };

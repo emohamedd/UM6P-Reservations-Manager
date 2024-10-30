@@ -15,15 +15,15 @@ body {
   
  
   .left-panel {
-    width: 50%;
+    width: 90%;
     background: url('../../public/assets/auth4.jpg') no-repeat center center;
     background-size: cover;
   }
   
  
   .right-panel {
-    width: 50%;
-    background-color: #EBEBD3;
+    width: 40%;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,6 +56,10 @@ body {
     width: 80%;
     display: flex;
     flex-direction: column;
+    /* background-color: none !important;/ */
+    /* background: #8a8686 !important; */
+    /* box-shadow: none !important; */
+    /* border: 1px solid black !important; */
   }
   
   .input-group {
