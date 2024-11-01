@@ -6,6 +6,7 @@ import AgendaView from '../components/AgendaView';
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
   const [notification, setNotification] = useState(null); 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('all'); 
@@ -21,6 +22,8 @@ const RoomList = () => {
         setRooms(response.data);
       } catch (error) {
         setNotification({ message: 'Error fetching rooms', type: 'error' });
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
 
@@ -90,13 +93,17 @@ const RoomList = () => {
     }
   };
 
+  const handleCloseNotification = () => {
+    setNotification(null);
+  };
+
   return (
     <div className="room-list-container">
       <div className="filter-fields">
         <div id="category-field">
-          <label htmlFor="category-select">Select Category:</label>
+          <label htmlFor="filter-select">Select Category:</label>
           <select
-            id="category-select"
+            id="filter-select"
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
@@ -123,15 +130,19 @@ const RoomList = () => {
         </div>
 
         <div id="view-field">
-          <label htmlFor="view-select">View:</label>
-          <select id="view-select" value={view} onChange={handleViewChange}>
+          <label htmlFor="filter-select">View:</label>
+          <select id="filter-select" value={view} onChange={handleViewChange}>
             <option value="rooms">Rooms View</option>
             <option value="agenda">Agenda View</option>
           </select>
         </div>
       </div>
 
-      {view === 'rooms' ? (
+      {loading ? (
+        <div className="loading-icon">
+          <img src="./assets/loading.png" alt="Loading" />
+        </div> // Display loading icon
+      ) : view === 'rooms' ? (
         <div className="room-list-wrapper">
           <ul className="room-list">
             {filteredRooms.length > 0 ? (
@@ -145,23 +156,24 @@ const RoomList = () => {
                       className={`status-circle ${
                         room.isReserved ? 'status-red' : 'status-green'
                       }`}
-                    ></span>
+                      ></span>
                     <h2 id="room-name">Room: {room.name || 'Unnamed Room'}</h2>
                   </div>
                   <p id="category">Category: {room.category || 'N/A'}</p>
-
+                  <p id="capacity">Capacity: {room.maxCapacity || 'N/A'}</p>  
                   {room.isReserved ? (
-                    <div>
-                      <p>Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
-                      <p>Start: {formatTime(room.reservation?.startTime)} {AmOrPm(room.reservation?.startTime)}</p>
-                      <p>End: {formatTime(room.reservation?.endTime)} {AmOrPm(room.reservation?.endTime)}</p>
-                      <p>Attendees: {room.reservation?.attendees || 'N/A'}</p>
-                      <button onClick={() => handleCancelReservation(room.reservation._id)}>
-                        Cancel Reservation
-                      </button>
+                    <div id="reserved-content-div">
+                      <p id="reserved-content">Reserved by: {room.reservation?.clientName || 'Unknown'}</p>
+                      <p id="reserved-content">{formatTime(room.reservation?.startTime)} {AmOrPm(room.reservation?.startTime)} - {formatTime(room.reservation?.endTime)} {AmOrPm(room.reservation?.endTime)} </p>
+                      <p id="reserved-content" > Attendees: {room.reservation?.attendees || 'N/A'}</p>
                     </div>
                   ) : (
-                    <p>Room is available</p>
+                <p>Room is available</p>
+                  )}
+                  {room.isReserved && (
+                    <button onClick={() => handleCancelReservation(room.reservation._id)}>
+                      Cancel Reservation
+                    </button>
                   )}
                 </li>
               ))
@@ -174,7 +186,7 @@ const RoomList = () => {
         <AgendaView />
       )}
 
-      {notification && <Notification {...notification} />}
+      {notification && <Notification {...notification} onClose={handleCloseNotification} />}
     </div>
   );
 };

@@ -1,21 +1,37 @@
 .notification {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    color: #000000;
-    z-index: 1000;
-    animation: fadeOut 3s forwards;
-  }
-  
-  .notification.success {
-    background-color: #4caf50;
-  }
-  
-  .notification.error {
-    background-color: #f44336;
-  }
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notification.success {
+  background-color: #28a745;
+  color: white;
+
+}
+
+.notification.error {
+  background-color: #dc3545;
+  color: white;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+}
   
   @keyframes fadeOut {
     0% {

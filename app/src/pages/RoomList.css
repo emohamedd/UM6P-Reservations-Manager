@@ -67,10 +67,6 @@ p:last-of-type {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.room-available:hover {
-  transform: translateY(-5px); /* Lift effect on hover */
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-}
 
 /* Reserved Room Styles */
 .room-reserved {
