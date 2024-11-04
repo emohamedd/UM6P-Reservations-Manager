@@ -18,17 +18,17 @@ const Auth = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validUsername = 'test';
-    const validPassword = 'test';
-
-    if (username === validUsername && password === validPassword) {
-      Cookies.set('isLoggedIn', 'true', { expires: 7 }); // Save login state in cookies for 7 days
-      setNotification({ message: 'Login successful', type: 'success' });
-      onLogin(true); // Call the onLogin function to update the parent component's state
+    if (username === 'test' && password === 'test') {
+      Cookies.set('isLoggedIn', 'true', { expires: 7 });
+      onLogin('staff'); // Set role as 'staff'
+    } else if (username === 'user' && password === 'user') {
+      Cookies.set('isLoggedIn', 'true', { expires: 7 });
+      onLogin('user'); // Set role as 'user'
     } else {
       setError('Invalid username or password.');
     }
   };
+  
 
   const handleLogout = () => {
     Cookies.remove('isLoggedIn'); // Clear the login state from cookies
