@@ -1,6 +1,6 @@
 import React from 'react';
-import RoomList from '../pages/RoomList';
-import ReservationForm from './ReservationForm';
+import RoomListUser from '../pages/RoomListUser.jsx';
+import ReservationFormUser from './ReservationFormUser';
 import UserReservations from './UserReservations';
 import LogoutBtn from './LogoutBtn.jsx';
 import Header from './header';
@@ -11,9 +11,9 @@ const UserDashboard = () => {
     <div className='user-div'>
         <Header />
       <h2>User Dashboard</h2>
-      <ReservationForm /> {/* Form for new reservation requests */}
+      <ReservationFormUser /> {/* Form for new reservation requests */}
       <UserReservations /> {/* Only shows the user's reservations */}
-      <RoomList showAvailableRoomsOnly={true} />
+      <RoomListUser showAvailableRoomsOnly={true} />
         <LogoutBtn />
     </div>
   );

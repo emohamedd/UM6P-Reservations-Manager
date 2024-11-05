@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // Import the js-cookie library
-import './Auth.css'; // Ensure the CSS matches the styling below
+import Cookies from 'js-cookie'; 
+import './Auth.css'; 
 
 const Auth = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -8,22 +8,22 @@ const Auth = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [notification, setNotification] = useState(null);
 
-  // Check for saved login state in cookies
+  
   useEffect(() => {
     const isLoggedIn = Cookies.get('isLoggedIn');
     if (isLoggedIn) {
-      onLogin(true); // Call the onLogin function to update the parent component's state
+      onLogin(true); 
     }
   }, [onLogin]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (username === 'test' && password === 'test') {
+    if (username === 'um6p-staff' && password === 'um6p-staff') {
       Cookies.set('isLoggedIn', 'true', { expires: 7 });
-      onLogin('staff'); // Set role as 'staff'
-    } else if (username === 'user' && password === 'user') {
+      onLogin('staff'); 
+    } else if (username === 'um6p-guest' && password === 'um6p-guest') {
       Cookies.set('isLoggedIn', 'true', { expires: 7 });
-      onLogin('user'); // Set role as 'user'
+      onLogin('user'); 
     } else {
       setError('Invalid username or password.');
     }
@@ -31,8 +31,8 @@ const Auth = ({ onLogin }) => {
   
 
   const handleLogout = () => {
-    Cookies.remove('isLoggedIn'); // Clear the login state from cookies
-    onLogin(false); // Call the onLogin function to update the parent component's state
+    Cookies.remove('isLoggedIn'); 
+    onLogin(false); 
   };
 
   return (
@@ -81,7 +81,11 @@ const Auth = ({ onLogin }) => {
 
         <footer>
           <p>Unauthorized access is prohibited. For UM6P staff only.</p>
+          <code>
+           UM6P Reservations made by <a href="https://github.com/emohamedd" target="_blank" rel="noopener noreferrer">Emohamedd</a>
+          </code>
         </footer>
+
       </div>
     </div>
   );

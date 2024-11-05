@@ -1,24 +1,30 @@
 // UserReservations.js
 import React, { useEffect, useState } from 'react';
+import './UserReservations.css';
+import API from '../services/api.js';
 
 const UserReservations = () => {
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    // Fetch user's reservations from the server (filtered by logged-in user)
-    // Example API call (replace with actual endpoint)
-    fetch('/api/user-reservations')
-      .then(response => response.json())
-      .then(data => setReservations(data));
+    const fetchReservations = async () => {
+      try {
+        const response = await API.get('/reservations');
+        setReservations(response.data);
+      } catch (error) {
+        console.error('Error fetching reservations:', error);
+      }
+    };
   }, []);
 
   return (
-    <div>
+    <div className='div-reserv'>
       <h3>Your Reservations</h3>
-      <ul>
+      <ul className='user-reserv'>
         {reservations.map(reservation => (
           <li key={reservation.id}>
-            Room: {reservation.room} | Status: {reservation.status}
+            Room: {reservation.room.name} | Status: {reservation.status}
+
           </li>
         ))}
       </ul>

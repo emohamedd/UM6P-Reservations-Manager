@@ -1,0 +1,311 @@
+body {
+    overflow-x: hidden;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+  }
+  
+  .room-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+    width: 100%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    text-align: center;
+  }
+  .room-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  
+    width: 100%;
+  }
+  .filter-select{
+    color: black !important;
+  }
+  
+  
+  .filter-fields {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 20px;
+  }
+  
+  #category-select, #filter-select {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background-color: #fafafa;
+    color: #333;
+    transition: border-color 0.3s ease;
+  }
+  
+  #category-select:focus, #filter-select:focus {
+    border-color: #ff701d;
+    outline: none;
+  }
+  .room-list li {
+    width: 20rem;
+    margin: 15px;
+    list-style: none;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .room-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  }
+  
+  .status-circle {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+  }
+  
+  .status-green {
+    background-color: #28a745;
+  }
+  
+  .status-red {
+    background-color: #dc3545;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #ff701d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination button:hover {
+    background-color: #e15e1a;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .room-available, .room-reserved {
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    text-align: center;
+    margin: 15px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .room-available {
+    background: linear-gradient(45deg, #ff8a3d 40%, #ff701d 80%);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+  .room-available:hover {
+   background: linear-gradient(45deg, #ff8a3d 40%, #ffffff 80%);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.589);
+    transform: scale(1.02);
+    /* border: 1px solid #ffa67d; */
+  }
+  .room-reserved {
+    background: linear-gradient(45deg, #dc3545 40%, #c82333 80%);
+    color: #fff;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    cursor: not-allowed;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .room-reserved:hover {
+    transform: scale(1.01);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  }
+  
+  .room-reserved .room-header {
+    /* background-color: #c82333; */
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  #reserved-content-div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px 0;
+    gap: 2px;
+    background-color: white;
+    border-radius: 8px;
+  }
+  #reserved-content{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  .room-reserved .room-header h2 {
+    color: #fff;
+  }
+  
+  .room-reserved p {
+    margin: 5px 0;
+  }
+  
+  .room-reserved button {
+    margin-top: 10px;
+    background-color: #c82333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border: 1px solid #000000;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .room-reserved button:hover {
+    background-color: #f02539;
+    transform: scale(1.1);
+    border: none;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.589);
+  
+  }
+  #reserved {
+    font-size: x-large;
+    font-weight: bolder;
+    color: rgb(23, 186, 226);
+  }
+  
+  #attendees {
+    font-weight: bolder;
+    font-size: large;
+    color: rgb(255, 255, 255);
+  
+  }
+  
+  #start,
+  #end {
+    font-size: x-large;
+    font-weight: bolder;
+    color: #ffffff;
+  }
+  
+  
+  ul {
+    padding: 20px;
+    width: 5%;
+    list-style-type: none;
+    max-height: 1000px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    height: 100%;
+  }
+  
+  ul::-webkit-scrollbar {
+    width: 50px;
+  }
+  
+  ul::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  ul::-webkit-scrollbar-thumb {
+    background: #df6925;
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+  }
+  
+  ul::-webkit-scrollbar-thumb:hover {
+    background: #ff6810;
+    cursor: pointer;
+  }
+  
+  
+  #category{
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 15px;
+    color: #000000;
+  }
+  
+  #room-status-g{
+    color: rgb(33, 211, 33);
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  #room-status-r{
+    color: rgb(211, 33, 33);
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .status-circle-g {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .status-red {
+    background-color: #dc3545;
+  }
+  
+  .status-green {
+    background-color: #28a745;
+  }
+  #capacity{
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+    color: #ffffff;
+  }
+  .loading-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loading-icon img {
+    width: 50px; /* Adjust size as needed */
+    height: 50px; /* Adjust size as needed */
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

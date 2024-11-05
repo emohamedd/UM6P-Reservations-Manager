@@ -5,6 +5,12 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
   }
+
+code {
+    color: black;
+    font-size: 1.2rem;
+  }
+
   
   .auth-container {
     display: flex;

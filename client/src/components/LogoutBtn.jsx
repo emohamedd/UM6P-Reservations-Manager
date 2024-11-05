@@ -1,13 +1,23 @@
 import React from "react";
 import Cookies from "js-cookie";
 import "./LogoutBtn.css";
+import SplashScreen from "./SplashScreen";
 import Auth from "./Auth";
 const LogoutBtn = () => {
  
-    const handleLogout = () => {
-        Cookies.remove('isLoggedIn'); // Clear the login state from cookies
-        window.location.reload(); // Refresh the page to reset the app
-      };
-    return <button id="logout-btn" onClick={handleLogout}>Logout</button>;}
 
+    const handleLogout = () => {
+        Cookies.remove('isLoggedIn'); 
+        window.location.reload(); 
+      };
+      return (
+        <div className="logout-container">
+          <button id="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+          
+        </div>
+      );
+
+};
 export default LogoutBtn;

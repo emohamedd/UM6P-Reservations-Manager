@@ -13,14 +13,12 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Create a new reservation
 router.post('/', async (req, res) => {
-  const { clientName, roomId, attendees, startTime, endTime, category } = req.body;
+  const { clientName, roomId, attendees, startTime, endTime, category, requestedBy } = req.body;
 
   try {
-    const start = new Date(startTime).toISOString(); // Use UTC format
+    const start = new Date(startTime).toISOString();
     const end = new Date(endTime).toISOString();
-
 
     if (end <= start) {
       return res.status(400).json({ message: 'End time must be later than start time.' });
@@ -30,53 +28,51 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: 'Start time must be in the future.' });
     }
 
-
-    // Check for overlapping reservations
-   // Check for overlapping reservations
     const existingReservations = await Reservation.find({
       room: roomId,
       $or: [
-        { startTime: { $lt: end }, endTime: { $gt: start } },  // Partial overlap
-        { startTime: { $gte: start, $lt: end } },  // Start within range
-        { endTime: { $gt: start, $lte: end } },  // End within range
-        { startTime: { $lte: start }, endTime: { $gte: end } }  // Fully overlapping
+        { startTime: { $lt: end }, endTime: { $gt: start } },
+        { startTime: { $gte: start, $lt: end } },
+        { endTime: { $gt: start, $lte: end } },
+        { startTime: { $lte: start }, endTime: { $gte: end } }
       ]
     });
 
-    // If there are any existing reservations, return a conflict error
     if (existingReservations.length > 0) {
       return res.status(409).json({ message: 'Room is already reserved for the selected time.' });
     }
 
-    // Find the room by ID
     const room = await Room.findById(roomId);
 
-    // Check if the room exists
     if (!room) {
       return res.status(404).json({ message: 'Room not found' });
     }
 
-    // Check if the room's category matches the selected category
     if (room.category !== category) {
       return res.status(400).json({ message: 'Selected category does not match the room category.' });
     }
 
-    // Create a new reservation
+    // Determine initial status based on role
+    const status = requestedBy === 'staff' ? 'accepted' : 'pending';
+
     const newReservation = new Reservation({
       clientName,
-      room: room._id, // Use room ID
+      room: room._id,
       attendees,
       startTime: start,
       endTime: end,
-      category, // Include category
+      category,
+      status,
+      requestedBy
     });
 
-    // Save reservation
     await newReservation.save();
 
-    // Update room to set isReserved to true
-    room.isReserved = true; // Set room as reserved
-    await room.save();
+    // For direct staff reservations, update room status immediately
+    if (requestedBy === 'staff') {
+      room.isReserved = true;
+      await room.save();
+    }
 
     res.status(201).json(newReservation);
   } catch (error) {
@@ -84,6 +80,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: 'Error creating reservation' });
   }
 });
+
 
 router.delete('/:reservationId', async (req, res) => {
   const { reservationId } = req.params;
@@ -112,5 +109,42 @@ router.delete('/:reservationId', async (req, res) => {
     res.status(500).json({ message: 'Error cancelling reservation' });
   }
 });
+
+router.put('/:reservationId/approve', async (req, res) => {
+  const { reservationId } = req.params;
+  const { action } = req.body; // "approve" or "reject"
+
+  try {
+    const reservation = await Reservation.findById(reservationId);
+
+    if (!reservation) {
+      return res.status(404).json({ message: 'Reservation not found' });
+    }
+
+    if (reservation.requestedBy === 'staff') {
+      return res.status(400).json({ message: 'Staff reservations do not require approval.' });
+    }
+
+    // Update status based on the action
+    if (action === 'approve') {
+      reservation.status = 'accepted';
+
+      const room = await Room.findById(reservation.room);
+      room.isReserved = true;
+      await room.save();
+    } else if (action === 'reject') {
+      reservation.status = 'rejected';
+    } else {
+      return res.status(400).json({ message: 'Invalid action' });
+    }
+
+    await reservation.save();
+    res.status(200).json({ message: `Reservation ${action}ed successfully`, reservation });
+  } catch (error) {
+    console.error('Error updating reservation:', error);
+    res.status(500).json({ message: 'Error updating reservation' });
+  }
+});
+
 
 module.exports = router;
