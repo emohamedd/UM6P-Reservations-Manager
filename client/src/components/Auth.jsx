@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie'; 
 import './Auth.css'; 
 
-const Auth = ({ onLogin }) => {
+
+const Auth = ({ onLogin , userRole}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,7 +13,8 @@ const Auth = ({ onLogin }) => {
   useEffect(() => {
     const isLoggedIn = Cookies.get('isLoggedIn');
     if (isLoggedIn) {
-      onLogin(true); 
+      const role = Cookies.get('role');
+      onLogin(role); 
     }
   }, [onLogin]);
 
@@ -20,19 +22,22 @@ const Auth = ({ onLogin }) => {
     e.preventDefault();
     if (username === 'um6p-staff' && password === 'um6p-staff') {
       Cookies.set('isLoggedIn', 'true', { expires: 7 });
+      Cookies.set('role', 'staff');
       onLogin('staff'); 
     } else if (username === 'um6p-guest' && password === 'um6p-guest') {
       Cookies.set('isLoggedIn', 'true', { expires: 7 });
-      onLogin('user'); 
+      Cookies.set('role', 'user');
+      onLogin('user');
     } else {
       setError('Invalid username or password.');
+
     }
   };
   
 
   const handleLogout = () => {
     Cookies.remove('isLoggedIn'); 
-    onLogin(false); 
+    Cookies.remove('role');
   };
 
   return (

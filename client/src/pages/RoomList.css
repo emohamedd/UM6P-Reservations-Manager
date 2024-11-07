@@ -297,6 +297,8 @@ ul::-webkit-scrollbar-thumb:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100px !important;
+  height: 100px !important;
 }
 
 .loading-icon img {

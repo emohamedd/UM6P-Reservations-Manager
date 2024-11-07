@@ -7,6 +7,7 @@ import Auth from './components/Auth';
 import StaffDashboard from './components/StaffDashboard'; // Import staff-specific dashboard
 import UserDashboard from './components/UserDashboard'; // Import user-specific dashboard
 import './App.css'; 
+import Cookies from 'js-cookie';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,12 +21,26 @@ function App() {
     }
   }, [isAuthenticated]);
 
+ 
+  useEffect(() => {
+    const roleFromCookies = Cookies.get('role');
+    if (roleFromCookies) {
+      setRole(roleFromCookies);
+      setIsAuthenticated(true);
+    }
+  }, []);
+    
   const handleLogin = (userRole) => {
     setIsAuthenticated(true);
-    setRole(userRole); // Set role based on login credentials
+    setRole(userRole);
+    Cookies.set('role', userRole);
+    Cookies.set('isLoggedIn', 'true', { expires: 7 });
+
+
   };
 
   if (!isAuthenticated) {
+
     return <Auth onLogin={handleLogin} />;
   }
 
@@ -35,6 +50,7 @@ function App() {
         <SplashScreen />
       ) : (
         <div className="page-container">
+        
           {role === 'staff' ? <StaffDashboard /> : <UserDashboard />}
         </div>
       )}

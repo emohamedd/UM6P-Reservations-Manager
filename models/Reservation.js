@@ -7,8 +7,7 @@ const ReservationSchema = new mongoose.Schema({
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   category: { type: String, required: true },
-  status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' }, // New status field
-  requestedBy: { type: String, required: true, enum: ['staff', 'user'] } // New role field
+ 
 });
 
 const Reservation = mongoose.model('Reservation', ReservationSchema);

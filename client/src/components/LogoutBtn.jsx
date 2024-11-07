@@ -8,6 +8,7 @@ const LogoutBtn = () => {
 
     const handleLogout = () => {
         Cookies.remove('isLoggedIn'); 
+        Cookies.remove('role');
         window.location.reload(); 
       };
       return (
