@@ -70,3 +70,18 @@
 .rbc-time-view .rbc-time-content {
   border-top: 2px solid #ff701d;
 }
+#exel-btn{
+  background-color: #ff701d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 18px;
+  margin: 10px;
+}
+
+#exel-btn:hover {
+  background-color: #ff843d;
+}

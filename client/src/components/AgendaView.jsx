@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import * as XLSX from 'xlsx';
 import styles from './AgendaView.css'; // Import custom CSS
 import API from '../services/api.js';
 
@@ -22,7 +23,7 @@ const AgendaView = () => {
         }, {});
 
         const reservations = reservationsResponse.data.map(reservation => {
-        const isCurrent = new Date(reservation.startTime) <= new Date() && new Date(reservation.endTime) >= new Date();
+          const isCurrent = new Date(reservation.startTime) <= new Date() && new Date(reservation.endTime) >= new Date();
           const isEnded = new Date(reservation.endTime) <= new Date();
           return {
             title: `Room: ${roomsMap[reservation.room]} - Reserved by: ${reservation.clientName}`,
@@ -56,8 +57,31 @@ const AgendaView = () => {
     };
   };
 
+  const exportToExcel = () => {
+    // Format the events data for Excel export
+    const data = events.map(event => ({
+      Room: event.title.split(' - ')[0].replace('Room: ', ''),
+      ReservedBy: event.title.split(' - ')[1].replace('Reserved by: ', ''),
+      Start: event.start.toLocaleString(),
+      End: event.end.toLocaleString(),
+      Attendees: event.attendees,
+      Status: event.isEnded ? 'Ended' : 'Ongoing'
+    }));
+
+    // Create a worksheet and a workbook
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Reservations");
+
+    // Download the Excel file
+    XLSX.writeFile(workbook, "Reservations.xlsx");
+  };
+
   return (
     <div className="agenda-view">
+      <button id="exel-btn" onClick={exportToExcel}>
+        Download as Excel
+      </button>
       <Calendar
         localizer={localizer}
         events={events}
